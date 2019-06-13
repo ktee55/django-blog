@@ -5,12 +5,12 @@
     <form method="POST">
       {% csrf_token %}
       <fieldset class="form-group">
-        <legend class="border-bottm mb-4">Join Today</legend>
+        <legend class="border-bottm mb-4">メンバー登録</legend>
         <!-- {{ form.as_p }} -->
         {{ form|crispy }}
       </fieldset>
       <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">Sign Up</button>
+        <button class="btn btn-outline-info" type="submit">登録する</button>
       </div>
     </form>
     <div class="border-top pt-3">

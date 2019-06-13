@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="content-section">
+    <form method="POST">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <!-- <legend class="border-bottm mb-4">この投稿を削除</legend> -->
+        <h5>投稿"{{ post.title }}"を削除してもよろしいですか？</h5>
+      </fieldset>
+      <div class="form-group">
+        <button class="btn btn-outline-danger" type="submit">削除する</button>
+        <a class="btn btn-outline-secondary" href="{% url 'post-detail' post.id %}">キャンセル</a>
+      </div>
+    </form>
+  </div>
+{% endblock content %}
