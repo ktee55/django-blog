@@ -1,7 +1,9 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 # from django.contrib.auth.forms import UserCreationForm
@@ -49,3 +51,13 @@ def profile(request):
   }
 
   return render(request, 'users/profile.html', context)
+
+def profiles(request, user_id):
+  try:
+    user = User.objects.get(pk=user_id)
+  except User.DoesNotExist:
+    raise Http404("User does not exist")
+  context = {
+    "user": user
+  }
+  return render(request, 'users/profiles.html', context)

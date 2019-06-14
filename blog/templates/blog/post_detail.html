@@ -4,8 +4,9 @@
           <img src="{{ post.author.profile.image.url }}" alt="" class="rounded-circle article-img">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+              <a class="mr-2" href="{% url 'profiles' post.author.id %}">{{ post.author }}</a>
+              <!-- <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> -->
+              <small class="text-muted">{{ post.date_posted }}</small>
               {% if post.author ==  user %}
                 <div>
                   <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">編集する</a>
@@ -15,6 +16,54 @@
             </div>
             <h2 class="article-title" >{{ post.title }}</h2>
             <p class="article-content">{{ post.content }}</p>
+            <small>カテゴリー: 
+              {% if post.category %}
+                <a href="{% url 'blog-category' post.category.id %}">{{ post.category }}</a>
+              {% else %}
+                未分類
+              {% endif %}
+            </small>
+            {% if post.tags.all.count %}
+            <small>タグ: 
+                {% for tag in post.tags.all %}
+                  <a href="{% url 'blog-tag' tag.id %}">{{ tag }}</a>
+                {% endfor %}
+            </small>
+            {% endif %}
+            <small>コメント: {{ post.comments.all.count }}</small>
+
+            <div class="comment">
+              {% for comment in post.comments.all %}
+                <img src="{{ comment.author.profile.image.url }}" alt="" class="rounded-circle comment-img">
+                 {{ comment.author }}
+                  {% if comment.author ==  user %}
+                    <div>
+                      <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">編集する</a>
+                      <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">削除する</a>
+                    </div>
+                  {% endif %}
+                <small class="text-muted">{{ comment.date_posted }}</small>
+                <p>{{ comment }}</p>
+              {% endfor %}
+            </div>
+
+            {% if user.is_authenticated %}
+            <form action="{% url 'comment-create' post.id %}" method="POST">
+              {% csrf_token %}
+                <fieldset class="form-group">
+                  <div class="form-group"> 
+                    <label for="comment" class="col-form-label">コメント</label> by
+                    <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle comment-img">
+                    {{ user }}
+                    <textarea name="comment" cols="40" rows="10" class="textarea form-control" id="comment" required></textarea> 
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <button class="btn btn-outline-info" type="submit">コメントする</button>
+                </div>
+            </form>
+            {% endif %}
+
           </div>
 
         </article>

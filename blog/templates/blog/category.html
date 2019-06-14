@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <h2 class="archive-heading">カテゴリー: {{ category }}</h2>
+          {% for post in category.posts.all %}
+          <article class="media content-section">
+            <img src="{{ post.author.profile.image.url }}" alt="" class="rounded-circle article-img">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="{% url 'profiles' post.author.id %}">{{ post.author }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+              </div>
+              <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+              <p class="article-content">{{ post.content }}</p>
+              <small>カテゴリー: 
+                {% if post.category %}
+                  <a href="{% url 'blog-category' post.category.id %}">{{ post.category }}</a>
+                {% else %}
+                  未分類
+                {% endif %}
+              </small>
+              {% if post.tags.all.count %}
+              <small>タグ: 
+                  {% for tag in post.tags.all %}
+                    <a href="{% url 'blog-tag' tag.id %}">{{ tag }}</a>
+                  {% endfor %}
+              </small>
+              {% endif %}
+              <small>コメント: {{ post.comments.all.count }}</small>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+{% endblock content %}
