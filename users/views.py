@@ -52,12 +52,12 @@ def profile(request):
 
   return render(request, 'users/profile.html', context)
 
-def profiles(request, user_id):
-  try:
-    user = User.objects.get(pk=user_id)
-  except User.DoesNotExist:
-    raise Http404("User does not exist")
-  context = {
-    "user": user
-  }
-  return render(request, 'users/profiles.html', context)
+# def profiles(request, user_id):
+#   try:
+#     user = User.objects.get(pk=user_id)
+#   except User.DoesNotExist:
+#     raise Http404("User does not exist")
+#   context = {
+#     "user": user
+#   }
+#   return render(request, 'users/profiles.html', context)
