@@ -4,9 +4,10 @@
           <img src="{{ post.author.profile.image.url }}" alt="" class="rounded-circle article-img">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{% url 'profiles' post.author.id %}">{{ post.author }}</a>
+              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
               <!-- <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> -->
               <small class="text-muted">{{ post.date_posted }}</small>
+              <!-- 投稿者にのみ編集ボタンを表示させる -->
               {% if post.author ==  user %}
                 <div>
                   <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">編集する</a>
@@ -14,8 +15,10 @@
                 </div>
               {% endif %}
             </div>
+
             <h2 class="article-title" >{{ post.title }}</h2>
             <p class="article-content">{{ post.content }}</p>
+
             <small>カテゴリー: 
               {% if post.category %}
                 <a href="{% url 'blog-category' post.category.id %}">{{ post.category }}</a>
@@ -23,32 +26,58 @@
                 未分類
               {% endif %}
             </small>
-            {% if post.tags.all.count %}
+
+            {% if post.tags.count %}
             <small>タグ: 
                 {% for tag in post.tags.all %}
                   <a href="{% url 'blog-tag' tag.id %}">{{ tag }}</a>
                 {% endfor %}
             </small>
             {% endif %}
-            <small>コメント: {{ post.comments.all.count }}</small>
 
+            <small>コメント: {{ post.approved_comments.count }}</small>
+
+            {% if user.is_authenticated %}
             <div class="comment">
               {% for comment in post.comments.all %}
-                <img src="{{ comment.author.profile.image.url }}" alt="" class="rounded-circle comment-img">
-                 {{ comment.author }}
-                  {% if comment.author ==  user %}
+
+              <!-- 投稿者にのみコメント承認権を与える(表示させる) -->
+              {% if post.author ==  user or comment.approved_comment %}
+
+                  <img src="{{ comment.author.profile.image.url }}" alt="" class="rounded-circle comment-img">
+
+                  <h6>{{ comment.author }}</h6>
+
                     <div>
-                      <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">編集する</a>
-                      <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">削除する</a>
+                      {% if comment.author ==  user %}
+                        <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'comment-update' comment.id %}">編集する</a>
+                      {% endif %}
+                      {% if comment.author ==  user or post.author == user %}
+                        <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'comment-delete' comment.id %}">削除する</a>
+                      {% endif %}
+                    </div>
+
+                  <small class="text-muted">{{ comment.date_posted }}</small>
+                  <p>{{ comment }}</p>
+
+                  {% if not comment.approved_comment %}
+                    <div>
+                    <a class="btn btn-default" href="{% url 'comment-delete' comment.id %}">Reject</a>
+                    <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
                     </div>
                   {% endif %}
-                <small class="text-muted">{{ comment.date_posted }}</small>
-                <p>{{ comment }}</p>
+
+                {% endif %}
+                
+              {% empty %}
+                  <p>コメントはありません。</p>
               {% endfor %}
             </div>
 
             {% if user.is_authenticated %}
-            <form action="{% url 'comment-create' post.id %}" method="POST">
+            <a class="btn btn-default" href="{% url 'comment-create' post.id %}">Add comment</a>
+            <div id="add_comment"></div>
+            <!-- <form action="{% url 'comment-create' post.id %}" method="POST">
               {% csrf_token %}
                 <fieldset class="form-group">
                   <div class="form-group"> 
@@ -61,10 +90,13 @@
                 <div class="form-group">
                   <button class="btn btn-outline-info" type="submit">コメントする</button>
                 </div>
-            </form>
+            </form> -->
             {% endif %}
 
-          </div>
+          </div> <!-- .comment -->
+          {% else %}
+            <p>コメントを見るにはログインが必要です。</p>
+          {% endif %}
 
         </article>
 {% endblock content %}

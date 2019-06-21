@@ -7,17 +7,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/bootstrap.css' %}">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
-
     {% if title %}
         <title>Django Blog - {{ title }}</title>
     {% else %}
         <title>Django Blog</title>
     {% endif %}
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/bootstrap.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'blog/fontawesome.css' %}"> -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
 </head>
 <body>
     <header class="site-header">
@@ -31,15 +33,20 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+              {% if user.is_superuser %}
+                <a class="nav-item nav-link" href="/admin">Admin</a>
+              {% endif %}
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
                 <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% with path=request.path %}
+                <a class="nav-item nav-link" href="{% url 'logout' %}?next={% url 'login' %}?next={{ path }}">Logout</a>
+                {% endwith %}
               {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'login' %}?next={{request.path}}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
               {% endif %}
             </div>
@@ -63,13 +70,31 @@
           <div class="content-section">
             <h3>Our Sidebar</h3>
             <p class='text-muted'>You can put any information here you'd like.
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Categories</li>
+s              <ul class="list-group">
+                <li class="list-group-item list-group-item-light">
+                  Categories
                   <ul>
                     {% for category in categories %}
-                      <li><a href="{% url 'blog-category' category.id %}">{{ category }}</a></li>
+                      <li><a href="{% url 'blog-category' category.name %}">{{ category }}[{{category.posts.count}}]</a></li>
                     {% endfor %}
                   </ul>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                  Tags
+                  <ul>
+                    {% for tag in tags %}
+                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }}[{{tag.posts.count}}]</a></li>
+                    {% endfor %}
+                  </ul>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                  Archives
+                  <ul>
+                    {% for archive in archives %}
+                      <li><a href="/archives/?month={{ archive.date_posted__month }}&year={{ archive.date_posted__year }}">{{archive.date_posted__year }}年 {{ archive.date_posted__month }}月 ( {{ archive.id__count }} )</a></li>
+                    {% endfor %}
+                  </ul>
+                </li>
                 <li class="list-group-item list-group-item-light">Latest Posts</li>
                 <li class="list-group-item list-group-item-light">Announcements</li>
                 <li class="list-group-item list-group-item-light">Calendars</li>
@@ -81,10 +106,13 @@
       </div>
     </main>
 
+
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- {% csrf_token %} -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script id="post" type="text/x-handlebars-template"></script>
+    <script src="{% static 'blog/app.js' %}"></script> -->
+
+
 </body>
 </html>

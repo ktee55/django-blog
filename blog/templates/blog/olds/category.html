@@ -4,7 +4,7 @@
       <div class="media">
         <div class="media-body">
           <h2 class="archive-heading">カテゴリー: {{ category }}</h2>
-          {% for post in category.posts.all %}
+          {% for post in posts %}
           <article class="media content-section">
             <img src="{{ post.author.profile.image.url }}" alt="" class="rounded-circle article-img">
             <div class="media-body">
@@ -21,14 +21,14 @@
                   未分類
                 {% endif %}
               </small>
-              {% if post.tags.all.count %}
+              {% if post.tags.count %}
               <small>タグ: 
                   {% for tag in post.tags.all %}
                     <a href="{% url 'blog-tag' tag.id %}">{{ tag }}</a>
                   {% endfor %}
               </small>
               {% endif %}
-              <small>コメント: {{ post.comments.all.count }}</small>
+              <small>コメント: {{ post.comments.count }}</small>
             </div>
           </article>
           {% endfor %}

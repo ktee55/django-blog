@@ -5,11 +5,28 @@
     <form method="POST">
       {% csrf_token %}
       <fieldset class="form-group">
-        <legend class="border-bottm mb-4">投稿</legend>
+        <legend class="border-bottm mb-4">
+          {% if edit %}
+            投稿の更新
+          {% else %}
+            投稿
+          {% endif %}
+        </legend>
         {{ form|crispy }}
       </fieldset>
       <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">投稿する</button>
+        <button class="btn btn-outline-info" type="submit">
+          {% if edit %}
+            更新する
+          {% else %}
+            投稿する
+          {% endif %}
+        </button>
+        {% if edit %}
+          <a class="btn btn-outline-secondary" href=" {% url 'post-detail' post.id %}">
+            キャンセル
+          </a>
+        {% endif %}
       </div>
     </form>
   </div>

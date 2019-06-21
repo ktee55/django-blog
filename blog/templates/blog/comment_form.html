@@ -1,16 +1,24 @@
-{% extends "blog/base.html" %}
+{% extends 'blog/base.html' %}
 {% load crispy_forms_tags %}
+
 {% block content %}
-  <div class="content-section">
-    <form method="POST">
+    <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle comment-img"> {{ user }}
+    <form method="POST" class="post-form">
       {% csrf_token %}
       <fieldset class="form-group">
-        <legend class="border-bottm mb-4">コメントの編集</legend>
         {{ form|crispy }}
-      </fieldset>
-      <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">編集する</button>
-      </div>
+        <button class="btn btn-outline-info" type="submit">
+        {% if edit %}
+          更新する
+        {% else %}
+          コメントする
+        {% endif %}
+        </button>
+
+        {% if edit %}
+          <a class="btn btn-outline-secondary" href=" {% url 'post-detail' post.id %}">
+            キャンセル
+          </a>
+        {% endif %}
     </form>
-  </div>
-{% endblock content %}
+{% endblock %}
