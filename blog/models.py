@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 class Tag(models.Model):
   name = models.CharField(max_length=100, verbose_name="タグ")
@@ -30,7 +32,7 @@ class Post(models.Model):
   date_posted = models.DateTimeField(default=timezone.now)
 
   author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-  category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="posts", null=True)
+  category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="posts", null=True, blank=True)
   tags = models.ManyToManyField(Tag, blank=True, related_name="posts")
 
   class Meta:
@@ -66,3 +68,31 @@ class Comment(models.Model):
   def approve(self):
     self.approved_comment = True
     self.save()
+
+
+class Photo(models.Model):
+
+    origin = models.ImageField(upload_to="photos/%y/%m/%d/")
+
+    large = ImageSpecField(source="origin",
+                         processors=[ResizeToFill(1280, 1024)],
+                         format='JPEG'
+                         )
+
+    medium = ImageSpecField(source='origin',
+                        processors=[ResizeToFill(600, 400)],
+                        format="JPEG",
+                        options={'quality': 75}
+                        )
+
+    small = ImageSpecField(source='origin',
+                            processors=[ResizeToFill(250,250)],
+                            format="JPEG",
+                            options={'quality': 60}
+                            )
+
+    thumbnail= ImageSpecField(source='origin',
+                            processors=[ResizeToFill(75,75)],
+                            format="JPEG",
+                            options={'quality': 50}
+                            )

@@ -17,7 +17,7 @@
             </div>
 
             <h2 class="article-title" >{{ post.title }}</h2>
-            <p class="article-content">{{ post.content }}</p>
+            <p class="article-content">{{ post.content | safe }}</p>
 
             <small>カテゴリー: 
               {% if post.category %}
@@ -75,22 +75,18 @@
             </div>
 
             {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'comment-create' post.id %}">Add comment</a>
-            <div id="add_comment"></div>
-            <!-- <form action="{% url 'comment-create' post.id %}" method="POST">
-              {% csrf_token %}
+            <!-- <a class="btn btn-default" href="{% url 'comment-create' post.id %}">Add comment</a> -->
+            <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle comment-img"> {{ user }}
+            <div id="add_comment">
+              <form method="POST" action="{% url 'comment-create' post.id %}" class="post-form">
+                {% csrf_token %}
                 <fieldset class="form-group">
-                  <div class="form-group"> 
-                    <label for="comment" class="col-form-label">コメント</label> by
-                    <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle comment-img">
-                    {{ user }}
-                    <textarea name="comment" cols="40" rows="10" class="textarea form-control" id="comment" required></textarea> 
-                  </div>
-                </fieldset>
-                <div class="form-group">
+                  {% load crispy_forms_tags %}
+                  {{ comment_form|crispy }}
                   <button class="btn btn-outline-info" type="submit">コメントする</button>
-                </div>
-            </form> -->
+                </fieldset>
+              </form>
+            </div>
             {% endif %}
 
           </div> <!-- .comment -->

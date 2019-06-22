@@ -4,7 +4,12 @@ body {
   margin-top: 5rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #444444;
 }
 
@@ -58,7 +63,7 @@ a.article-title:hover {
 .article-metadata {
   padding-bottom: 1px;
   margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
+  border-bottom: 1px solid #e3e3e3;
 }
 
 .article-metadata a:hover {
@@ -83,7 +88,6 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-
 /* My Own CSS */
 
 .comment-img {
@@ -107,3 +111,69 @@ small {
   font-size: 1.6rem;
   margin: 20px 0 30px;
 }
+
+div.content-section {
+  position: relative;
+}
+
+div.content-section #expand-modal {
+  position: absolute;
+  top: 160px;
+  right: 20px;
+}
+
+div.content-section section.modal.show-modal {
+  background: #333;
+  opacity: 0.8;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.content-section section.modal.show-modal #photos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.content-section section.modal.show-modal #photos form {
+  text-align: center;
+  margin-top: 50px;
+}
+
+div.content-section section.modal.show-modal #photos form .col-form-label {
+  display: none;
+}
+
+div.content-section section.modal.show-modal #photos div {
+  text-align: center;
+}
+
+div.content-section section.modal.show-modal #photos div ul {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin: 10px 0;
+}
+
+div.content-section section.modal.show-modal #photos div ul li {
+  list-style: none;
+}
+
+div.content-section section.modal.show-modal #photos div ul li img {
+  cursor: pointer;
+  margin: 10px 10px;
+}
+
+ul.image-list {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul.image-list li {
+  margin: 10px 0;
+  flex-basis: 50%;
+}
+
