@@ -44,14 +44,14 @@
         </div>
         <a class="btn btn-outline-info" href="{% url 'photo-create' %}">写真を追加する</a>
         <!-- <form class="file-upload" method="POST" action="{% url 'photo-create' %}" enctype="multipart/form-data"> -->
-        <!-- <form class="file-upload" method="POST" enctype="multipart/form-data">
+         <form class="file-upload" method="POST" enctype="multipart/form-data">
           <small>or 画像をアップロード</small>
           {% csrf_token %}
             <fieldset class="form-group">
               {{ upload_form|crispy }}
               <button class="btn btn-primary" type="submit">アップロード</button>
             </fieldset>
-        </form> -->
+        </form> 
       </div>
     </section>
   </div> <!-- content-section -->

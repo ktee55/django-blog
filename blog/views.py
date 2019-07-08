@@ -7,8 +7,10 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .models import Post, Comment, Category, Tag, Photo
-from .forms import CommentForm, UploadFileForm
+from .models import Post, Comment, Category, Tag
+from photos.models import Photo
+from .forms import CommentForm
+from photos.forms import UploadFileForm
 
 
 class PostListView(ListView):
@@ -184,33 +186,6 @@ def archives(request):
     }
     return render(request, 'blog/post_list.html', context)
 
-
-class PhotoListView(ListView):
-    model = Photo
-    context_object_name = 'photos'
-    ordering = ['-id']
-    paginate_by = 4
-
-class PhotoCreateView(LoginRequiredMixin, CreateView): 
-  model = Photo
-  fields = ['origin']
-  success_url = reverse_lazy('photo-list')
-
-# def create_photo(request):
-#     if request.method == "POST":
-#         form = UploadFileForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             photo = form.save()
-#             next = request.POST.get('next', '/')
-#             photo.save()
-#             return redirect(next)
-#     else:
-#         form = UploadFileForm()
-#     return render(request, 'blog/photo_form.html', {'form': form})
-
-class PhotoDeleteView(LoginRequiredMixin, DeleteView): 
-  model = Photo
-  success_url = reverse_lazy('photo-list')
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
