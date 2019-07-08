@@ -19,7 +19,10 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     # path('register/', register, name='register'),
     path('', include('blog.urls')),
+
     path('photos/', include('photos.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/photos/', include('photos.api.urls'))
 ]
 
 if settings.DEBUG:
