@@ -123,6 +123,12 @@ div.content-section #expand-modal {
 }
 
 div.content-section section.modal.show-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
   background: #333;
   opacity: 0.8;
   color: white;
@@ -153,6 +159,7 @@ div.content-section section.modal.show-modal #photos div {
 div.content-section section.modal.show-modal #photos div ul {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   margin-top: 10px;
   margin: 10px 0;
 }
@@ -174,6 +181,6 @@ ul.image-list {
 
 ul.image-list li {
   margin: 10px 0;
-  flex-basis: 50%;
+  flex-basis: 20%;
 }
 

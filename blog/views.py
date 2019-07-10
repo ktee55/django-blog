@@ -46,11 +46,11 @@ class PostCreateView(LoginRequiredMixin, CreateView): #-> post_form.html
   # success_url = reverse_lazy('blog-home')
 
   #追加データを渡す
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す
-    context["photos"] = Photo.objects.all().order_by('-id')
-    context["upload_form"] = UploadFileForm()
-    return context
+  # def get_context_data(self, **kwargs):
+  #   context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す
+  #   context["photos"] = Photo.objects.all().order_by('-id')
+  #   context["upload_form"] = UploadFileForm()
+  #   return context
 
   def form_valid(self, form):
     form.instance.author = self.request.user

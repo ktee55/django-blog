@@ -1,0 +1,19 @@
+<div>
+  <small>クリックして画像を挿入</small>
+  <ul>
+    {% for photo in photos %}
+    <li>
+      <img src="{{ photo.thumbnail.url }}" data-medium="{{ photo.medium.url }}" data-origin="{{ igin.url }}"/> 
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+<a class="btn btn-outline-info" href="{% url 'photo-create' %}">写真を追加する</a>
+<form class="file-upload" method="POST" enctype="multipart/form-data">
+<small>or 画像をアップロード</small>
+{% csrf_token %}
+  <fieldset class="form-group">
+    {{ upload_form|crispy }}
+    <button class="btn btn-primary" type="submit">アップロード</button>
+  </fieldset>
+</form> 

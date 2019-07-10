@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'imagekit',
     'rest_framework',
+    # 'rest_framework.authtoken',  
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -160,7 +161,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  
+    #     'rest_framework.authentication.BasicAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    ],
+
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

@@ -10,7 +10,7 @@ class PhotoListView(ListView):
     model = Photo
     context_object_name = 'photos'
     ordering = ['-id']
-    paginate_by = 4
+    paginate_by = 10
 
 class PhotoCreateView(LoginRequiredMixin, CreateView): 
   model = Photo
