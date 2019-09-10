@@ -1,13 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content %}
     {% if view.kwargs.category_name %}
-      <h2 class="archive-heading">カテゴリー: {{ view.kwargs.category_name }}</h2>
+      <small>カテゴリー: </small><h2 class="archive-heading">{{ view.kwargs.category_name }}</h2>
     {% elif view.kwargs.tag_name %}
-      <h2 class="archive-heading">タグ: {{ view.kwargs.tag_name }}</h2>
+      <small>タグ: </small><h2 class="archive-heading">{{ view.kwargs.tag_name }}</h2>
     {% elif view.kwargs.username %}
-      <h2 class="archive-heading">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h2>
+      <small>Posts By </small><h2 class="archive-heading">{{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h2>
     {% elif is_archives %}
-      <h2 class="archive-heading">アーカイブ: {{ year }}年 {{ month }} 月 </h2>
+      <small>アーカイブ： </small><h2 class="archive-heading">{{ year }}年 {{ month }} 月 </h2>
     {% endif %}
     {% for post in posts %}
         <article class="media content-section">

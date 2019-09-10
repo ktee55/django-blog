@@ -54,10 +54,22 @@ a.article-title:hover {
   white-space: pre-line;
 }
 
+.article-content img {
+  width: 100%;
+  max-width: 600px;
+}
+
 .article-img {
   height: 65px;
   width: 65px;
   margin-right: 16px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .article-img {
+    display: block;
+  }
 }
 
 .article-metadata {
@@ -90,6 +102,20 @@ a.article-title:hover {
 
 /* My Own CSS */
 
+h1 {
+  color: white;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 0;
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 1.6rem;
+}
+
 .comment-img {
   height: 26px;
   width: 26px;
@@ -109,7 +135,7 @@ small {
 
 .archive-heading {
   font-size: 1.6rem;
-  margin: 20px 0 30px;
+  margin: 0 0 20px;
 }
 
 div.content-section {
@@ -130,47 +156,42 @@ div.content-section section.modal.show-modal {
   height: 100%;
   overflow: scroll;
   background: #333;
-  opacity: 0.8;
+  opacity: 0.9;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-div.content-section section.modal.show-modal #photos {
+div.content-section section.modal.show-modal #photo_insert {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-div.content-section section.modal.show-modal #photos form {
-  text-align: center;
-  margin-top: 50px;
+div.content-section section.modal.show-modal #photo_insert div.photo-list {
+  margin-top: 40px;
 }
 
-div.content-section section.modal.show-modal #photos form .col-form-label {
-  display: none;
-}
-
-div.content-section section.modal.show-modal #photos div {
-  text-align: center;
-}
-
-div.content-section section.modal.show-modal #photos div ul {
+div.content-section section.modal.show-modal #photo_insert div.photo-list div {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  margin: 10px 0;
+  justify-content: space-between;
 }
 
-div.content-section section.modal.show-modal #photos div ul li {
+div.content-section section.modal.show-modal #photo_insert div.photo-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px 0;
+  padding: 0;
+}
+
+div.content-section section.modal.show-modal #photo_insert div.photo-list ul li {
   list-style: none;
 }
 
-div.content-section section.modal.show-modal #photos div ul li img {
+div.content-section section.modal.show-modal #photo_insert div.photo-list ul li img {
   cursor: pointer;
-  margin: 10px 10px;
+  margin: 10px 10px 10px 0;
 }
 
 ul.image-list {
@@ -182,5 +203,47 @@ ul.image-list {
 ul.image-list li {
   margin: 10px 0;
   flex-basis: 20%;
+}
+
+@media (max-width: 768px) {
+  ul.image-list li {
+    flex: 1;
+    justify-items: start;
+  }
+}
+
+ul.image-list li img {
+  margin-right: 10px;
+}
+
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 650px;
+  height: 150px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: rgba(39, 58, 75, 0.97);
+  border-style: dashed;
+  background-color: #fafafa;
+  opacity: 0.9;
+  color: #605e5e;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .mobile-off {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-item {
+    border-top: 1px solid #cbd5db;
+  }
 }
 

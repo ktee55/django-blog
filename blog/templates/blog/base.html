@@ -8,11 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {% if title %}
-        <title>Django Blog - {{ title }}</title>
+        <title>Blog for Nobody - {{ title }}</title>
     {% else %}
-        <title>Django Blog</title>
+        <title>Blog for Nobody</title>
     {% endif %}
 
+    <!-- <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p:100,300,400,500,700,800,900&display=swap" rel="stylesheet">  -->
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:600i,700i&display=swap" rel="stylesheet"> 
     <!-- Bootstrap CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" type="text/css" href="{% static 'blog/bootstrap.css' %}">
@@ -25,7 +27,7 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
+          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}"><h1>Blog for Nobody</h1></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
@@ -45,6 +47,7 @@
                 {% with path=request.path %}
                 <a class="nav-item nav-link" href="{% url 'logout' %}?next={% url 'login' %}?next={{ path }}">Logout</a>
                 {% endwith %}
+                <a class="nav-item nav-link">{{ user.username }}</a>
               {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}?next={{request.path}}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
@@ -68,8 +71,8 @@
         </div>
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Our Sidebar</h3>
               <ul class="list-group">
+                <li class="list-group-item list-group-item-light"><a href="{% url 'photo-list' %}">Photos</a></li>
                 <li class="list-group-item list-group-item-light">
                   Categories
                   <ul>
@@ -97,7 +100,6 @@
                 <li class="list-group-item list-group-item-light">Latest Posts</li>
                 <li class="list-group-item list-group-item-light">Announcements</li>
                 <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
               </ul>
             </p>
           </div>
