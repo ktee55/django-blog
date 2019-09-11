@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+_ke8anz$9940h7nijki2418zbjoxm8bmpps=v$*#lf@)y_ef^'
-
+# SECRET_KEY = '9d40f9d23ebea57a2159ccd6343720b99d0a9f219b58f532'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blog-for-nobody.herokuapp.com']
 
 
 # Application definition
@@ -162,10 +162,12 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'system@shrewd.work'
 
-# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_ACCESS_KEY_ID = 'AKIASRB7VGGMIMOXWSMN'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'blog-for-nobody'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+# AWS_ACCESS_KEY_ID = 'AKIASRB7VGGMIMOXWSMN'
+# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME = 'blog-for-nobody'
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
