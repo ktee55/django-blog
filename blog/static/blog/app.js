@@ -29171,6 +29171,11 @@ function (_React$Component) {
           'content-type': 'multipart/form-data'
         }
       };
+
+      _this.setState({
+        loading: true
+      });
+
       return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, formData, config);
     });
 
@@ -29178,7 +29183,11 @@ function (_React$Component) {
       e.preventDefault(); // this.fileUpload(this.state.file).then(this.getData());
 
       _this.fileUpload(_this.state.file).then(function (res) {
-        _this.addPhoto(res.data); // this.insertImage(res.data);
+        _this.addPhoto(res.data);
+
+        _this.setState({
+          loading: false
+        }); // this.insertImage(res.data);
 
       });
     });
@@ -29194,7 +29203,8 @@ function (_React$Component) {
       photos: [],
       file: null,
       currentPage: 1,
-      setPerPage: 10
+      setPerPage: 10,
+      loading: false
     };
     return _this;
   }
@@ -29218,7 +29228,15 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-primary keep-modal",
         onClick: this.postData
-      }, "\u753B\u50CF\u3092\u30A2\u30C3\u30D7\u30ED\u30FC\u30C9")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_PhotoList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, "\u753B\u50CF\u3092\u30A2\u30C3\u30D7\u30ED\u30FC\u30C9"), this.state.loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-warning loading",
+        type: "button",
+        disabled: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "spinner-grow spinner-grow-sm",
+        role: "status",
+        "aria-hidden": "true"
+      }), "Loading...")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_PhotoList__WEBPACK_IMPORTED_MODULE_3__["default"], {
         photos: this.state.photos
       }));
     } //render

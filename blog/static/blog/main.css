@@ -220,7 +220,7 @@ ul.image-list li img {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 650px;
+  width: 650px;
   height: 150px;
   margin-bottom: 20px;
   padding: 20px;
@@ -233,6 +233,20 @@ ul.image-list li img {
   color: #605e5e;
   outline: none;
   transition: border 0.24s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .dropzone {
+    width: 100%;
+  }
+}
+
+.spinner-grow {
+  margin-right: 7px;
+}
+
+.loading {
+  margin-left: 10px;
 }
 
 @media (max-width: 768px) {
