@@ -17,9 +17,9 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
   fields = ['origin']
   success_url = reverse_lazy('photo-list')
 
-  def form_valid(self, form):
-    form.instance.author = self.request.user
-    return super().form_valid(form)
+  # def form_valid(self, form):
+  #   form.instance.author = self.request.user
+  #   return super().form_valid(form)
 
 # def create_photo(request):
 #     if request.method == "POST":
