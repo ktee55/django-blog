@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -29,3 +30,7 @@ class Photo(models.Model):
                             format="JPEG",
                             options={'quality': 50}
                             )
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="photos")
+
+    visibility = models.BooleanField(default=True)

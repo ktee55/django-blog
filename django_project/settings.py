@@ -208,6 +208,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 # ACCOUNT_EMAIL_REQUIRED = False
 
 #Image-kit セーブ時にサムネイルを保存
-# IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+IMAGEKIT_CACHEFILE_DIR = 'OPTIONS'
 
 django_heroku.settings(locals())
