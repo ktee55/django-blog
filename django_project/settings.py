@@ -184,7 +184,7 @@ AWS_DEFAULT_ACL = None
 # https を有効にします
 # AWS_S3_SECURE_URLS = True
 # 認証クエリーを無効にします
-# AWS_QUERYSTRING_AUTH = False
+AWS_QUERYSTRING_AUTH = False
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'blog.storages.CustomS3Boto3Storage'
