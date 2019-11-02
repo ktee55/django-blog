@@ -29649,8 +29649,8 @@ NodeList.prototype.on = NodeList.prototype.addEventListener = function (name, fn
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/c/Users/Ko/Desktop/dj-first/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /mnt/c/Users/Ko/Desktop/dj-first/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! /mnt/c/Users/UncleKo/Desktop/dj-first/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /mnt/c/Users/UncleKo/Desktop/dj-first/resources/sass/main.scss */"./resources/sass/main.scss");
 
 
 /***/ })

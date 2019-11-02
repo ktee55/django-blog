@@ -8,9 +8,9 @@ from django.urls import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Post, Comment, Category, Tag
-from photos.models import Photo
-from .forms import CommentForm
-from photos.forms import UploadFileForm
+# from photos.models import Photo
+from .forms import CommentForm #, CategoryForm, TagForm
+# from photos.forms import UploadFileForm
 
 
 class PostListView(ListView):
@@ -56,6 +56,12 @@ class PostCreateView(LoginRequiredMixin, CreateView): #-> post_form.html
     form.instance.author = self.request.user
     return super().form_valid(form)
 
+  # def get_context_data(self, **kwargs):
+  #   context = super().get_context_data(**kwargs) 
+  #   context["category_form"] = CategoryForm()
+  #   context["tag_form"] = TagForm()
+  #   return context
+
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #-> post_form.html
   model = Post
   fields = ['title', 'content', 'category', 'tags']
@@ -63,8 +69,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #-> p
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す
     context["edit"] = 1
-    context["photos"] = Photo.objects.all()
-    context["upload_form"] = UploadFileForm()
+    # context["photos"] = Photo.objects.all()
+    # context["upload_form"] = UploadFileForm()
+    # context["category_form"] = CategoryForm()
+    # context["tag_form"] = TagForm()
     return context
 
   def form_valid(self, form):
@@ -158,7 +166,7 @@ class CategoryPostListView(ListView):
   model = Post
   template_name = 'blog/post_list.html' 
   context_object_name = 'posts'
-  paginate_by = 2
+  paginate_by = 3
 
   def get_queryset(self):
     category = get_object_or_404(Category, name=self.kwargs.get('category_name'))
@@ -168,7 +176,7 @@ class TagPostListView(ListView):
   model = Post
   template_name = 'blog/post_list.html' 
   context_object_name = 'posts'
-  paginate_by = 2
+  paginate_by = 3
 
   def get_queryset(self):
     tag = get_object_or_404(Tag, name=self.kwargs.get('tag_name'))
