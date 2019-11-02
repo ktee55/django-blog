@@ -39,8 +39,10 @@
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              {% if user.is_authenticated %}
+              {% if user.is_staff %}
                 <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+              {% endif %}
+              {% if user.is_authenticated %}
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 {% with path=request.path %}
                 <a class="nav-item nav-link" href="{% url 'logout' %}?next={% url 'login' %}?next={{ path }}">Logout</a>
@@ -75,7 +77,7 @@
                   Categories
                   <ul>
                     {% for category in categories %}
-                      <li><a href="{% url 'blog-category' category.name %}">{{ category }}[{{category.posts.count}}]</a></li>
+                      <li><a href="{% url 'blog-category' category.name %}">{{ category }} ( {{category.posts.count}} )</a></li>
                     {% endfor %}
                   </ul>
                 </li>
@@ -83,7 +85,7 @@
                   Tags
                   <ul>
                     {% for tag in tags %}
-                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }}[{{tag.posts.count}}]</a></li>
+                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ( {{tag.posts.count}} )</a></li>
                     {% endfor %}
                   </ul>
                 </li>
@@ -95,9 +97,6 @@
                     {% endfor %}
                   </ul>
                 </li>
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
               </ul>
             </p>
           </div>

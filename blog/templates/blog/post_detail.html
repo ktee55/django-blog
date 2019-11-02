@@ -17,6 +17,9 @@
             </div>
 
             <h2 class="article-title" >{{ post.title }}</h2>
+            {% if post.featured_image %}
+             <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
+            {% endif %}
             <p class="article-content">{{ post.content | safe }}</p>
 
             <small>カテゴリー: 

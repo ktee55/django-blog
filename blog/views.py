@@ -40,9 +40,9 @@ class PostDetailView(DetailView):  # -> post_detail.html
     context["comment_form"] = CommentForm()
     return context
 
-class PostCreateView(LoginRequiredMixin, CreateView): #-> post_form.html
+class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): #-> post_form.html
   model = Post
-  fields = ['title', 'content', 'category', 'tags']
+  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image']
   # success_url = reverse_lazy('blog-home')
 
   #追加データを渡す
@@ -62,9 +62,15 @@ class PostCreateView(LoginRequiredMixin, CreateView): #-> post_form.html
   #   context["tag_form"] = TagForm()
   #   return context
 
+  #ユーザーがスタッフの時にのみ許可
+  def test_func(self):
+    if self.request.user.is_staff:
+        return True
+    return False
+
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #-> post_form.html
   model = Post
-  fields = ['title', 'content', 'category', 'tags']
+  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image']
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す

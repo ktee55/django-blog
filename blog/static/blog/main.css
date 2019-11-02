@@ -59,6 +59,10 @@ a.article-title:hover {
   max-width: 600px;
 }
 
+.featured_image {
+  width: 100%;
+}
+
 .article-img {
   height: 65px;
   width: 65px;

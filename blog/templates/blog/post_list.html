@@ -10,6 +10,7 @@
       <small>アーカイブ： </small><h2 class="archive-heading">{{ year }}年 {{ month }} 月 </h2>
     {% endif %}
     {% for post in posts %}
+      {% if not post.draft %}
         <article class="media content-section">
           <img src="{{ post.author.profile.image.url }}" alt="" class="rounded-circle article-img">
           <div class="media-body">
@@ -18,7 +19,13 @@
               <small class="text-muted">{{ post.date_posted|date:"Y-m-j" }}</small>
             </div>
             <h2><a class="article-title" href=" {% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content | safe }}</p>
+            {% if post.featured_image %}
+             <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
+            {% endif %}
+            <p class="article-content"> {{ post.content | safe | slice:":200" }}.....</p>
+            <p>
+              <a href="{% url 'post-detail' post.id %}">続きを読む</a> 
+            </p>
             <small>カテゴリー: 
               {% if post.category %}
                 <a href="{% url 'blog-category' post.category.id %}">{{ post.category }}</a>
@@ -36,6 +43,7 @@
             <small>コメント: {{ post.comments.count }}</small>
           </div>
         </article>
+      {% endif %}
     {% endfor %}
 
     <!-- Only for Blog Home -->
