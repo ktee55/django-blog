@@ -1,9 +1,11 @@
 from django.urls import path, include
-from .views import PhotoListView, PhotoCreateView, PhotoDeleteView
+from .views import PhotoListView, PhotoDetailView, PhotoCreateView, PhotoUpdateView, PhotoDeleteView
 
 urlpatterns = [
     path('', PhotoListView.as_view(), name='photo-list'),
+    path('<int:pk>/', PhotoDetailView.as_view(), name='photo-detail'),
     path('create/', PhotoCreateView.as_view(), name='photo-create'),
     # path('photo/create/', views.create_photo, name='photo-create'),
+    path('<int:pk>/update/', PhotoUpdateView.as_view(), name='photo-update'),
     path('<int:pk>/delete', PhotoDeleteView.as_view(), name='photo-delete'),
 ]

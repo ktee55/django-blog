@@ -1,0 +1,45 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    
+  <div class="content-section">
+
+    <p>
+      <img src="{{ photo.medium.url }}" class="mt-2 mb-2">
+    </p>
+    <div>
+      <a class="btn btn-info text-white" href="{{ photo.origin.url }}" target="_blank">オリジナルサイズ</a>
+
+       {% if photo.author == user%}
+        <a class="btn btn-outline-secondary btn-sm mb-1" href="{% url 'photo-update' photo.id %}">編集する</a>
+        <a class="btn btn-outline-danger btn-sm mb-1" href="{% url 'photo-delete' photo.id %}">削除する</a>
+      {% endif %} 
+
+      {% if photo.private %}
+         <small class="text-danger">非公開中</small>
+      {% endif %}
+
+    </div>
+    <div class="mt-2">
+      <small>カテゴリー: 
+        {% if photo.category %}
+          {% comment %} <a href="{% url 'photo-category' photo.category.id %}"> {% endcomment %}
+            {{ photo.category }}
+          {% comment %} </a> {% endcomment %}
+        {% else %}
+          未分類
+        {% endif %}
+      </small> 
+      {% if photo.tags.count %}
+        <small>タグ: 
+          {% for tag in photo.tags.all %}
+            {% comment %} <a href="{% url 'photo-tag' tag.id %}"> {% endcomment %}
+              {{ tag }}
+            {% comment %} </a> {% endcomment %}
+          {% endfor %}
+        </small>
+      {% endif %} 
+
+    </div>
+  </div> <!-- content-section -->
+
+{% endblock content %}

@@ -16,8 +16,8 @@
     <!-- <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p:100,300,400,500,700,800,900&display=swap" rel="stylesheet">  -->
     <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:600i,700i&display=swap" rel="stylesheet"> 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
 
 </head>
@@ -78,7 +78,7 @@
                   Categories
                   <ul>
                     {% for category in categories %}
-                      <li><a href="{% url 'blog-category' category.name %}">{{ category }} ( {{category.posts.count}} )</a></li>
+                      <li><a href="{% url 'blog-category' category.name %}">{{ category }} ({{category.posts.count}})</a></li>
                     {% endfor %}
                   </ul>
                 </li>
@@ -86,7 +86,7 @@
                   Tags
                   <ul>
                     {% for tag in tags %}
-                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ( {{tag.posts.count}} )</a></li>
+                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{tag.posts.count}})</a></li>
                     {% endfor %}
                   </ul>
                 </li>
@@ -94,7 +94,7 @@
                   Archives
                   <ul>
                     {% for archive in archives %}
-                      <li><a href="/archives/?month={{ archive.date_posted__month }}&year={{ archive.date_posted__year }}">{{archive.date_posted__year }}年 {{ archive.date_posted__month }}月 ( {{ archive.id__count }} )</a></li>
+                      <li><a href="/archives/?month={{ archive.date_posted__month }}&year={{ archive.date_posted__year }}">{{archive.date_posted__year }}年 {{ archive.date_posted__month }}月 ({{ archive.id__count }})</a></li>
                     {% endfor %}
                   </ul>
                 </li>
