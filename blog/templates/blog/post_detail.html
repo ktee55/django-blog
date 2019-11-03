@@ -16,7 +16,11 @@
               {% endif %}
             </div>
 
-            <h2 class="article-title" >{{ post.title }}</h2>
+            <h2 class="article-title" >{{ post.title }}
+            {% if post.draft %}
+               <small class="text-danger">（下書き）</small>
+            {% endif %}
+            </h2>
             {% if post.featured_image %}
              <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
             {% endif %}

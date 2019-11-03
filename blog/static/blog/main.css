@@ -107,12 +107,14 @@ a.article-title:hover {
 /* My Own CSS */
 
 h1 {
-  color: white;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.9rem;
-  font-weight: 700;
-  font-style: italic;
-  margin-bottom: 0;
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+  background: url("https://blog-for-nobody.s3-ap-northeast-1.amazonaws.com/logo.png") no-repeat center center;
+  background-size: cover;
+  width: 133px;
+  height: 30px;
+  margin: 0 auto;
 }
 
 h2 {
