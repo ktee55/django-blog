@@ -201,25 +201,20 @@ div.content-section section.modal.show-modal #photo_insert div.photo-list ul li 
 }
 
 ul.image-list {
-  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 ul.image-list li {
   margin: 10px 0;
-  flex-basis: 20%;
-}
-
-@media (max-width: 768px) {
-  ul.image-list li {
-    flex: 1;
-    justify-items: start;
-  }
+  flex-basis: 49%;
 }
 
 ul.image-list li img {
   margin-right: 10px;
+  width: 100%;
+  max-width: 250px;
 }
 
 .dropzone {
@@ -265,5 +260,19 @@ ul.image-list li img {
   .nav-item {
     border-top: 1px solid #cbd5db;
   }
+}
+
+#photo-link {
+  margin-top: 10px;
+  text-align: right;
+}
+
+#photo-link a {
+  color: white;
+  text-decoration: underline;
+}
+
+ul li {
+  list-style: none;
 }
 

@@ -10,10 +10,9 @@
     <ul class="list-unstyled image-list">
       {% for photo in photos %}
       <li>
-              <a href="{{ photo.large.url }}">
-                <img src="{{ photo.thumbnail.url }}">
+              <a href="{{ photo.origin.url }}" target="_blank">
+                <img src="{{ photo.small.url }}">
               </a>
-              <h5>No.{{photo.id}}</h5>
               {% if user.is_authenticated %}
                 <a class="btn btn-outline-danger btn-sm mt-1 mb-1" href="{% url 'photo-delete' photo.id %}">削除する</a>
               {% endif %}

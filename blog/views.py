@@ -31,7 +31,7 @@ class UserPostListView(ListView):
     user = get_object_or_404(User, username=self.kwargs.get('username'))
     return Post.objects.filter(author=user).order_by('-date_posted')
 
-class PostDetailView(DetailView):  # -> post_detail.html
+class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
   model = Post
     # context_object_name = 'post'
 
@@ -39,6 +39,13 @@ class PostDetailView(DetailView):  # -> post_detail.html
     context = super().get_context_data(**kwargs) 
     context["comment_form"] = CommentForm()
     return context
+
+  #投稿が下書きになっていないか、下書きになっててもユーザーが投稿者本人の時表示する。
+  def test_func(self):
+    post = self.get_object()
+    if not post.draft or self.request.user == post.author:
+        return True
+    return False
 
 class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): #-> post_form.html
   model = Post

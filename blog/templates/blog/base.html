@@ -74,7 +74,6 @@
         <div class="col-md-4">
           <div class="content-section">
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light"><a href="{% url 'photo-list' %}">Photos</a></li>
                 <li class="list-group-item list-group-item-light">
                   Categories
                   <ul>
@@ -99,6 +98,9 @@
                     {% endfor %}
                   </ul>
                 </li>
+              </ul>
+              <ul class="list-group">
+                <li id="photo-link" class="bg-info list-group-item list-group-item-light"><a href="{% url 'photo-list' %}">Photo Album</a></li>
               </ul>
             </p>
           </div>
