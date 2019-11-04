@@ -16,18 +16,14 @@
         {{ form|crispy }}
       </fieldset>
       <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">
-          {% if edit %}
-            更新する
-          {% else %}
-            投稿する
-          {% endif %}
-        </button>
-        {% if edit %}
-          <a class="btn btn-outline-secondary" href=" {% url 'post-detail' post.id %}">
-            キャンセル
-          </a>
-        {% endif %}
+      {% if edit %}
+        <button class="btn btn-outline-info" type="submit"> 更新する </button>
+        <a class="btn btn-outline-danger" href="{% url 'post-delete' post.id %}">削除する</a>
+        <a class="btn btn-outline-secondary" href=" {% url 'post-detail' post.id %}">キャンセル</a>
+      {% else %}
+        <button class="btn btn-outline-info" type="submit"> アップロード </button>
+      {% endif %}
+
       </div>
     </form>
     {% comment %} <form method="POST" action="" class="post-form">

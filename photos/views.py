@@ -57,7 +57,6 @@ class PhotoCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class PhotoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): 
   model = Photo
   fields = ['private', 'category', 'tags']
-  success_url = reverse_lazy('photo-list')
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す

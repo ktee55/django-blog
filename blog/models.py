@@ -42,6 +42,7 @@ class Post(models.Model):
   def __str__(self):
     return self.title
 
+  #編集後そのidのページに戻る
   def get_absolute_url(self):
       return reverse('post-detail', kwargs={'pk': self.pk})
 

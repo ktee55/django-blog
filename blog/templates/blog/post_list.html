@@ -24,7 +24,7 @@
             {% endif %}
             </h2>
             {% if post.featured_image %}
-             <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
+             <a href="{{ post.featured_image.url }}" target="_blank"><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></a>
             {% endif %}
             <p class="article-content"> {{ post.content | safe | slice:":200" }}.....</p>
             <p>

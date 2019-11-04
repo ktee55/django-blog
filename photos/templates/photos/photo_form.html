@@ -11,6 +11,7 @@
       {% if edit %}
         <button class="btn btn-outline-info" type="submit"> 更新する </button>
         <a class="btn btn-outline-danger" href="{% url 'photo-delete' photo.id %}">削除する</a>
+        <a class="btn btn-outline-secondary" href=" {% url 'photo-detail' photo.id %}">キャンセル</a>
       {% else %}
         <button class="btn btn-outline-info" type="submit"> アップロード </button>
       {% endif %}

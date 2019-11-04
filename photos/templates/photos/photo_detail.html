@@ -3,9 +3,8 @@
     
   <div class="content-section">
 
-    <p>
-      <img src="{{ photo.medium.url }}" class="mt-2 mb-2">
-    </p>
+    <img src="{{ photo.medium.url }}" class="mt-2 mb-2">
+    <p id="photo-by">Photo by {{ photo.author }}</p>
     <div>
       <a class="btn btn-info text-white" href="{{ photo.origin.url }}" target="_blank">オリジナルサイズ</a>
 
@@ -33,7 +32,7 @@
         <small>タグ: 
           {% for tag in photo.tags.all %}
             {% comment %} <a href="{% url 'photo-tag' tag.id %}"> {% endcomment %}
-              {{ tag }}
+              <a href="">{{ tag }}</a>
             {% comment %} </a> {% endcomment %}
           {% endfor %}
         </small>
