@@ -1,6 +1,15 @@
 {% extends "blog/base.html" %}
 {% block content %}
 
+  <div class="mb-1">
+    {% if previous %}
+    <a href=" {% url 'photo-detail' previous.id %}">Previous</a>
+    {% endif %}
+    {% if next %}
+    <a href=" {% url 'photo-detail' next.id %}">Next</a>
+    {% endif %}
+  </div>
+
   <div id="photo-detail" class="content-section">
 
     <img src="{{ photo.medium.url }}" class="mb-3">

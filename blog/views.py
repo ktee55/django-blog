@@ -36,8 +36,11 @@ class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
     # context_object_name = 'post'
 
   def get_context_data(self, **kwargs):
+    post = self.get_object()
     context = super().get_context_data(**kwargs) 
     context["comment_form"] = CommentForm()
+    context["next"] = post.get_next_by_date_posted
+    context["previous"] = post.get_previous_by_date_posted
     return context
 
   #投稿が下書きになっていないか、下書きになっててもユーザーが投稿者本人の時表示する。

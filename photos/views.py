@@ -16,9 +16,12 @@ class PhotoListView(ListView):
 class PhotoDetailView(UserPassesTestMixin, DetailView):
   model = Photo
 
-  # def get_context_data(self, **kwargs):
-  #   context = super().get_context_data(**kwargs) 
-  #   return context
+  def get_context_data(self, **kwargs):
+    photo = self.get_object()
+    context = super().get_context_data(**kwargs) 
+    context["next"] = photo.get_next_by_date_posted
+    context["previous"] = photo.get_previous_by_date_posted
+    return context
 
   #写真が非公開になっていないか、非公開になっててもユーザーが投稿者本人の時表示する。
   def test_func(self):
