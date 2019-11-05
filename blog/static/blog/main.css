@@ -262,21 +262,52 @@ ul.image-list li img {
   }
 }
 
-#photo-link {
-  margin-top: 10px;
-  text-align: right;
-}
-
-#photo-link a {
-  color: white;
-  text-decoration: underline;
+ul {
+  padding-left: 25px;
 }
 
 ul li {
   list-style: none;
 }
 
-#photo-by {
+.photo-by {
   font-style: italic;
+}
+
+.content-section {
+  padding-bottom: 20px;
+}
+
+#side-menu {
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  #side-menu ul:first-child {
+    order: 1;
+  }
+}
+
+#side-menu ul:first-child #photo-link {
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+#side-menu ul:first-child #photo-link a {
+  color: white;
+  text-decoration: underline;
+}
+
+#photo-detail img {
+  width: 100%;
+}
+
+#photo-detail div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 

@@ -1,9 +1,10 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
 from imagekit.models import ImageSpecField, ProcessedImageField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFill, ResizeToFit
 
 class Tag(models.Model):
   name = models.CharField(max_length=100, verbose_name="タグ")
@@ -29,27 +30,29 @@ class Photo(models.Model):
   origin = models.ImageField(upload_to="photos/%y/%m/%d/")
 
   # large = ImageSpecField(source="origin",
-  #                      processors=[ResizeToFill(1280, 1024)],
+  #                      processors=[ResizeToFit(1280, 1280)],
   #                      format='JPEG'
   #                      )
 
   medium = ImageSpecField(source='origin',
-                      processors=[ResizeToFill(600, 400)],
+                      processors=[ResizeToFit(700, 700)],
                       format="JPEG",
-                      options={'quality': 75}
+                      options={'quality': 80}
                       )
 
   small = ImageSpecField(source='origin',
                           processors=[ResizeToFill(250,250)],
                           format="JPEG",
-                          options={'quality': 60}
+                          options={'quality': 80}
                           )
 
   thumbnail= ImageSpecField(source='origin',
                           processors=[ResizeToFill(75,75)],
                           format="JPEG",
-                          options={'quality': 50}
+                          options={'quality': 80}
                           )
+
+  date_posted = models.DateTimeField(default=timezone.now)
 
   author = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, related_name="photos")
 
@@ -62,3 +65,6 @@ class Photo(models.Model):
   #編集後そのidのページに戻る
   def get_absolute_url(self):
       return reverse('photo-detail', kwargs={'pk': self.pk})
+
+  def __str__(self):
+    return self.origin.url
