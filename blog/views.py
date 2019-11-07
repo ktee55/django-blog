@@ -20,6 +20,9 @@ class PostListView(ListView):
   ordering = ['-date_posted']
   paginate_by = 3
 
+  # def get_queryset(self):
+  #   return Post.objects.filter(draft=False).order_by('-date_posted')
+
 class UserPostListView(ListView):
   model = Post
   template_name = 'blog/post_list.html' 
@@ -31,6 +34,11 @@ class UserPostListView(ListView):
     user = get_object_or_404(User, username=self.kwargs.get('username'))
     return Post.objects.filter(author=user).order_by('-date_posted')
 
+# def post_detail(request, post_id):
+
+#   post = Post.objects.get(pk=post_id)
+#   public_posts = Post.objects.filter(draft=False)
+
 class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
   model = Post
     # context_object_name = 'post'
@@ -39,8 +47,17 @@ class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
     post = self.get_object()
     context = super().get_context_data(**kwargs) 
     context["comment_form"] = CommentForm()
-    context["next"] = post.get_next_by_date_posted
-    context["previous"] = post.get_previous_by_date_posted
+
+    try:
+      context["next"] = post.get_next_by_date_posted(draft=False)
+    except:
+      context["next"] = None
+
+    try:
+      context["previous"] = post.get_previous_by_date_posted(draft=False)
+    except:
+      context["previous"] = None
+
     return context
 
   #投稿が下書きになっていないか、下書きになっててもユーザーが投稿者本人の時表示する。

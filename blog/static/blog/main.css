@@ -2,6 +2,7 @@ body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 h1,
@@ -263,7 +264,7 @@ ul.image-list li img {
 }
 
 ul {
-  padding-left: 25px;
+  padding-left: 12px;
 }
 
 ul li {
@@ -274,8 +275,10 @@ ul li {
   font-style: italic;
 }
 
-.content-section {
+.photo-detail .content-section,
+.post-detail .content-section {
   padding-bottom: 20px;
+  margin-bottom: 0;
 }
 
 #side-menu {
@@ -309,5 +312,11 @@ ul li {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+}
+
+.prev-next {
+  margin-top: 1px;
+  display: flex;
+  justify-content: space-between;
 }
 

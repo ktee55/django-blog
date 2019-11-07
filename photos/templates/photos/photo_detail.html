@@ -1,16 +1,9 @@
 {% extends "blog/base.html" %}
 {% block content %}
 
-  <div class="mb-1">
-    {% if previous %}
-    <a href=" {% url 'photo-detail' previous.id %}">Previous</a>
-    {% endif %}
-    {% if next %}
-    <a href=" {% url 'photo-detail' next.id %}">Next</a>
-    {% endif %}
-  </div>
+<div id="photo-detail">
 
-  <div id="photo-detail" class="content-section">
+  <div class="content-section">
 
     <img src="{{ photo.medium.url }}" class="mb-3">
     <div class="mb-4">
@@ -52,5 +45,16 @@
     </div>
 
   </div> <!-- content-section -->
+
+  <div class="prev-next">
+    {% if previous %}
+    <a href=" {% url 'photo-detail' previous.id %}">Prev</a>
+    {% endif %}
+    {% if next %}
+    <a href=" {% url 'photo-detail' next.id %}">Next</a>
+    {% endif %}
+  </div>
+
+</div> <!-- photo-detail -->
 
 {% endblock content %}
