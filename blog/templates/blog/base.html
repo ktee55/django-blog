@@ -77,6 +77,30 @@
                 <li id="photo-link" class="bg-info list-group-item list-group-item-light"><a href="{% url 'photo-list' %}">Photo Album</a></li>
               </ul>
               <ul class="list-group">
+                {% if user.is_authenticated %}
+                <li class="list-group-item list-group-item-light">
+                  Drafts
+                  <ul>
+                    {% for post in drafts %}
+                      {% if post.author == user %}
+                        <li><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></li>
+                      {% else %}
+                        <p>下書きはありません</p>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% endif %}
+                <li class="list-group-item list-group-item-light">
+                  Latest Posts
+                  <ul>
+                    {% for post in latest_posts %}
+                      {% if post.draft == False %}
+                        <li><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
                 <li class="list-group-item list-group-item-light">
                   Categories
                   <ul>
@@ -89,7 +113,7 @@
                   Tags
                   <ul>
                     {% for tag in tags %}
-                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{tag.posts.count}})</a></li>
+                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{ tag.posts.count }})</a></li>
                     {% endfor %}
                   </ul>
                 </li>

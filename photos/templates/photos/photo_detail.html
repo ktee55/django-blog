@@ -47,6 +47,7 @@
   </div> <!-- content-section -->
 
   <div class="prev-next">
+    <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">Back</a>
     <div>
       <a class="btn btn-outline-info mr-1" href="
         {% if previous %}
@@ -59,10 +60,7 @@
         {% endif %}
       ">Next</a>
     </div>
-    <div>
-      <a class="btn btn-info mr-1" href="{{request.META.HTTP_REFERER}}">Back</a>
-      <a class="btn btn-info" href="{% url 'photo-list' %}">Top</a>
-    </div>
+    <a class="btn btn-info" href="{% url 'photo-list' %}">Top</a>
   </div>
 
 </div> <!-- photo-detail -->

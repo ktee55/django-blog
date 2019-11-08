@@ -112,8 +112,9 @@
         </article>
 
         <div class="prev-next">
+          <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">Back</a>
           <div>
-            <a class="btn btn-outline-info" href="
+            <a class="btn btn-outline-info mr-1" href="
               {% if previous %}
                 {% url 'post-detail' previous.id %}
               {% endif %}
@@ -124,10 +125,7 @@
               {% endif %}
             ">Next</a>
           </div>
-          <div>
-            <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">Back</a>
-            <a class="btn btn-info" href="{% url 'blog-home' %}">Home</a>
-          </div>
+          <a class="btn btn-info" href="{% url 'blog-home' %}">Top</a>
         </div>
         
  </div> <!-- post-detail -->
