@@ -12,6 +12,9 @@ class PhotoListView(ListView):
     ordering = ['-id']
     paginate_by = 6
 
+    def get_queryset(self):
+      return Photo.objects.filter(private=False).order_by('-id')
+
 
 class PhotoDetailView(UserPassesTestMixin, DetailView):
   model = Photo

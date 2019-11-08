@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
   <div class="content-section">
-    <h2>Photos</h2>
+    <h2 class="font-weight-bold">Photos</h2>
     {% if user.is_staff %}
       <a class="btn btn-outline-info btn-sm" href="{% url 'photo-create' %}">写真を追加</a>
     {% endif %}
@@ -12,7 +12,7 @@
         {% if not photo.private or photo.author == user%}
         <li>
                 <a class="" href=" {% url 'photo-detail' photo.id %}">
-                  <img src="{{ photo.small.url }}" class="mt-2 mb-2">
+                  <p><img src="{{ photo.small.url }}" class="mt-2 mb-2"></p>
                 </a>
                 {% if photo.author == user%}
                   <a class="btn btn-outline-secondary btn-sm mb-1" href="{% url 'photo-update' photo.id %}">編集する</a>

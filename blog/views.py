@@ -20,8 +20,8 @@ class PostListView(ListView):
   ordering = ['-date_posted']
   paginate_by = 3
 
-  # def get_queryset(self):
-  #   return Post.objects.filter(draft=False).order_by('-date_posted')
+  def get_queryset(self):
+    return Post.objects.filter(draft=False).order_by('-date_posted')
 
 class UserPostListView(ListView):
   model = Post

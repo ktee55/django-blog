@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 {% block content %}
 
-<div class="post-detail">
+<div id="post-detail">
 
         <article class="media content-section">
           <img src="{{ post.author.profile.image.url }}" alt="" class="rounded-circle article-img">
@@ -25,7 +25,9 @@
             {% endif %}
             </h2>
             {% if post.featured_image %}
-             <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
+             <a href="{{ post.featured_image.url }}" target="_blank">
+              <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
+             </a>
             {% endif %}
             <p class="article-content">{{ post.content | safe }}</p>
 
@@ -110,17 +112,22 @@
         </article>
 
         <div class="prev-next">
-          <a href="
-            {% if previous %}
-              {% url 'post-detail' previous.id %}
-            {% endif %}
-          ">Prev</a>
-          
-          <a href="
-            {% if next %}
-              {% url 'post-detail' next.id %}
-            {% endif %}
-          ">Next</a>
+          <div>
+            <a class="btn btn-outline-info" href="
+              {% if previous %}
+                {% url 'post-detail' previous.id %}
+              {% endif %}
+            ">Prev</a>
+            <a class="btn btn-outline-info" href="
+              {% if next %}
+                {% url 'post-detail' next.id %}
+              {% endif %}
+            ">Next</a>
+          </div>
+          <div>
+            <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">Back</a>
+            <a class="btn btn-info" href="{% url 'blog-home' %}">Home</a>
+          </div>
         </div>
         
  </div> <!-- post-detail -->

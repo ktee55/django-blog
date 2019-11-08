@@ -1,3 +1,7 @@
+html {
+  font-size: 15px;
+}
+
 body {
   background: #fafafa;
   color: #333333;
@@ -275,10 +279,10 @@ ul li {
   font-style: italic;
 }
 
-.photo-detail .content-section,
-.post-detail .content-section {
+#photo-detail .content-section,
+#post-detail .content-section {
   padding-bottom: 20px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 #side-menu {
@@ -307,7 +311,7 @@ ul li {
   width: 100%;
 }
 
-#photo-detail div {
+#photo-detail div div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -315,7 +319,7 @@ ul li {
 }
 
 .prev-next {
-  margin-top: 1px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 }

@@ -47,12 +47,22 @@
   </div> <!-- content-section -->
 
   <div class="prev-next">
-    {% if previous %}
-    <a href=" {% url 'photo-detail' previous.id %}">Prev</a>
-    {% endif %}
-    {% if next %}
-    <a href=" {% url 'photo-detail' next.id %}">Next</a>
-    {% endif %}
+    <div>
+      <a class="btn btn-outline-info mr-1" href="
+        {% if previous %}
+          {% url 'photo-detail' previous.id %}
+        {% endif %}
+      ">Prev</a>
+      <a class="btn btn-outline-info" href="
+        {% if next %}
+          {% url 'photo-detail' next.id %}
+        {% endif %}
+      ">Next</a>
+    </div>
+    <div>
+      <a class="btn btn-info mr-1" href="{{request.META.HTTP_REFERER}}">Back</a>
+      <a class="btn btn-info" href="{% url 'photo-list' %}">Top</a>
+    </div>
   </div>
 
 </div> <!-- photo-detail -->
