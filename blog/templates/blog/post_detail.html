@@ -31,6 +31,11 @@
             {% endif %}
             <p class="article-content">{{ post.content | safe }}</p>
 
+            {% if post.url %}
+            <small>参照URL: </small>
+            <p><a class="url" href="{{ post.url }}" target="_blank">{{ post.url }}</a></p>
+            {% endif %}
+
             <small>カテゴリー: 
               {% if post.category %}
                 <a href="{% url 'blog-category' post.category.name %}">{{ post.category }}</a>
@@ -70,7 +75,13 @@
                     </div>
 
                   <small class="text-muted">{{ comment.date_posted }}</small>
+
                   <p>{{ comment }}</p>
+
+                  {% if comment.url %}
+                  <small>参照URL: </small>
+                  <p><a class="url" href="{{ comment.url }}" target="_blank">{{ comment.url }}</a></p>
+                  {% endif %}
 
                   {% if not comment.approved_comment %}
                     <div>

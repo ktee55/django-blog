@@ -69,7 +69,7 @@ class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
 
 class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): #-> post_form.html
   model = Post
-  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image']
+  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image', 'url']
   # success_url = reverse_lazy('blog-home')
 
   #追加データを渡す
@@ -97,7 +97,7 @@ class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): #-> p
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #-> post_form.html
   model = Post
-  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image']
+  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image', 'url']
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す

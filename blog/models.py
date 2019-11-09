@@ -35,6 +35,7 @@ class Post(models.Model):
   category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="posts", null=True, blank=True, verbose_name="カテゴリー")
   tags = models.ManyToManyField(Tag, blank=True, related_name="posts", verbose_name="タグ")
   draft = models.BooleanField(default=False, verbose_name="下書きにする")
+  url = models.URLField(max_length=200, blank=True, verbose_name="参照URL")
 
   class Meta:
     verbose_name_plural = "投稿"
@@ -56,6 +57,7 @@ class Comment(models.Model):
   author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
   post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
   approved_comment = models.BooleanField(default=False)
+  url = models.URLField(max_length=200, blank=True, verbose_name="参照URL")
 
   class Meta:
     verbose_name_plural = "コメント"

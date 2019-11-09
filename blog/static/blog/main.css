@@ -324,3 +324,6 @@ ul li {
   justify-content: space-between;
 }
 
+.url {
+  word-break: break-all;
+}
