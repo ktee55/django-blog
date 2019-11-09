@@ -81,13 +81,15 @@
                 <li class="list-group-item list-group-item-light">
                   Drafts
                   <ul>
-                    {% for post in drafts %}
-                      {% if post.author == user %}
-                        <li><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></li>
-                      {% else %}
+                    <!-- {% if drafts.count %} -->
+                      {% for post in drafts %}
+                        {% if post.author == user %}
+                          <li><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                    <!-- {% else %}
                         <p>下書きはありません</p>
-                      {% endif %}
-                    {% endfor %}
+                    {% endif %} -->
                   </ul>
                 </li>
                 {% endif %}
@@ -105,7 +107,7 @@
                   Categories
                   <ul>
                     {% for category in categories %}
-                      <li><a href="{% url 'blog-category' category.name %}">{{ category }} ({{category.posts.count}})</a></li>
+                      <li><a href="{% url 'blog-category' category.name %}">{{ category }} ({{category.num_posts}})</a></li>
                     {% endfor %}
                   </ul>
                 </li>
@@ -113,7 +115,7 @@
                   Tags
                   <ul>
                     {% for tag in tags %}
-                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{ tag.posts.count }})</a></li>
+                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{ tag.num_posts }})</a></li>
                     {% endfor %}
                   </ul>
                 </li>

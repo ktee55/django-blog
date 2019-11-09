@@ -54,7 +54,7 @@ class Photo(models.Model):
 
   date_posted = models.DateTimeField(default=timezone.now)
 
-  author = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, related_name="photos")
+  author = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="photos")
 
   private = models.BooleanField(default=False, verbose_name="非公開にする")
 

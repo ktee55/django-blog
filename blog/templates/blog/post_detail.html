@@ -33,7 +33,7 @@
 
             <small>カテゴリー: 
               {% if post.category %}
-                <a href="{% url 'blog-category' post.category.id %}">{{ post.category }}</a>
+                <a href="{% url 'blog-category' post.category.name %}">{{ post.category }}</a>
               {% else %}
                 未分類
               {% endif %}
@@ -42,7 +42,7 @@
             {% if post.tags.count %}
             <small>タグ: 
                 {% for tag in post.tags.all %}
-                  <a href="{% url 'blog-tag' tag.id %}">{{ tag }}</a>
+                  <a href="{% url 'blog-tag' tag.name %}">{{ tag }}</a>
                 {% endfor %}
             </small>
             {% endif %}

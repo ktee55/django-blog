@@ -4,8 +4,9 @@
 <div id="photo-detail">
 
   <div class="content-section">
-
-    <img src="{{ photo.medium.url }}" class="mb-3">
+    <a href="{{ photo.origin.url }}" target="_blank">
+      <p><img src="{{ photo.medium.url }}" class="mb-3"></p>
+    </a>
     <div class="mb-4">
       <p class="photo-by mb-0">Photo by {{ photo.author }}</p>
       <div>
