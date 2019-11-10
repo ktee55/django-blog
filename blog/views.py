@@ -44,7 +44,7 @@ class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
     # context_object_name = 'post'
 
   def get_context_data(self, **kwargs):
-    post = self.get_object()
+    # post = self.get_object()
     context = super().get_context_data(**kwargs) 
     context["comment_form"] = CommentForm()
 

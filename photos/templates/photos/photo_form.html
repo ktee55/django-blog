@@ -8,12 +8,18 @@
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form|crispy }}
+      {% if not edit %}
+      <div>
+        <i id="add-form" class="far fa-plus-square"></i>
+        <i id="remove-form" class="far fa-minus-square"></i>
+      </div>
+      {% endif %}
       {% if edit %}
         <button class="btn btn-outline-info" type="submit"> 更新する </button>
         <a class="btn btn-outline-danger" href="{% url 'photo-delete' photo.id %}">削除する</a>
-        <a class="btn btn-outline-secondary" href=" {% url 'photo-detail' photo.id %}">キャンセル</a>
+        <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">キャンセル</a>
       {% else %}
-        <button class="btn btn-outline-info" type="submit"> アップロード </button>
+        <button class="btn btn-outline-info mt-3" type="submit"> アップロード </button>
       {% endif %}
     </form>
   </div>

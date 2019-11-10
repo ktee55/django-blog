@@ -11,7 +11,7 @@
       </fieldset>
       <div class="form-group">
         <button class="btn btn-outline-danger" type="submit">削除する</button>
-        <a class="btn btn-outline-secondary" href="{% url 'photo-list' %}">キャンセル</a>
+        <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">キャンセル</a>
       </div>
     </form>
   </div>

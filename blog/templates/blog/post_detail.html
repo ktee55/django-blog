@@ -74,7 +74,7 @@
                       {% endif %}
                     </div>
 
-                  <small class="text-muted">{{ comment.date_posted }}</small>
+                  <small class="text-muted">{{ post.date_posted|date:"Y-m-j" }}</small>
 
                   <p>{{ comment }}</p>
 

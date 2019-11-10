@@ -22,6 +22,7 @@
         <a class="btn btn-outline-secondary" href=" {% url 'post-detail' post.id %}">キャンセル</a>
       {% else %}
         <button class="btn btn-outline-info" type="submit">投稿する</button>
+        <a class="btn btn-outline-secondary" href=" {% url 'blog-home' %}">キャンセル</a>
       {% endif %}
 
       </div>

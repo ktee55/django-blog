@@ -29275,9 +29275,32 @@ if (document.getElementById('photo_insert')) {
 }
 
 (function ($, $$) {
-  $('.navbar-toggler').on('click', function () {
-    $('#navbarToggle').classList.toggle('collapse');
-  });
+  var form_control = function form_control() {
+    $('.navbar-toggler').on('click', function () {
+      $('#navbarToggle').classList.toggle('collapse');
+    });
+    var multiField = document.getElementsByClassName('multiField');
+
+    for (var _i = 1; _i < multiField.length; _i++) {
+      multiField[_i].classList.add('hide');
+
+      multiField[0].classList.add('mt-0');
+    }
+
+    var i = 1;
+    $('#add-form').on('click', function (e) {
+      e.preventDefault();
+      multiField[i].classList.remove('hide');
+      i++;
+    });
+    $('#remove-form').on('click', function (e) {
+      i > 1 ? i-- : i;
+      e.preventDefault();
+      multiField[i].classList.add('hide');
+    });
+  };
+
+  form_control();
   var modal = $('.modal'); // let photos = $$('#photos img');
   // // transfered to Photo.js(React Component)
   // function insertImage() {

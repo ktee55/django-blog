@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy
 
 from .models import Photo
-from .forms import UploadFileForm
+# from .forms import UploadFileForm
+from .forms import UploadMultipleFormSet
 
 class PhotoListView(ListView):
     model = Photo
@@ -56,6 +58,21 @@ class PhotoCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     if self.request.user.is_staff:
         return True
     return False
+
+@permission_required('is_staff')
+def create_photo(request):
+    if request.method == "POST":
+        # formset = UploadMultipleFormSet(request.POST or None, files=request.FILES or None, queryset=Photo.objects.none())
+        formset = UploadMultipleFormSet(request.POST, files=request.FILES)
+        if formset.is_valid():
+            photos = formset.save(commit=False)
+            for photo in photos:
+              photo.author = request.user
+              photo.save()
+            return redirect('photo-list')
+    else:
+        formset = UploadMultipleFormSet(queryset=Photo.objects.none())
+    return render(request, 'photos/photo_form.html', {'form': formset})
 
 # def create_photo(request):
 #     if request.method == "POST":

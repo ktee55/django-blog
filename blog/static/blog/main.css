@@ -327,3 +327,18 @@ ul li {
 .url {
   word-break: break-all;
 }
+
+.hide {
+  display: none;
+}
+
+.multiField {
+  margin-top: 5rem;
+}
+
+.far {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #17a2b8;
+}
+
