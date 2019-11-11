@@ -9,7 +9,7 @@ from .models import Photo
 UploadMultipleFormSet = forms.modelformset_factory(
     Photo, 
     # form=UploadFileForm,
-    fields = ['origin', 'private', 'category', 'tags'],
+    fields = ['origin', 'category', 'tags', 'private'],
     extra=10,
-    # max_num=5
+    max_num=10
 )

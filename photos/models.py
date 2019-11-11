@@ -58,9 +58,9 @@ class Photo(models.Model):
 
   private = models.BooleanField(default=False, verbose_name="非公開にする")
 
-  category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="posts", null=True, blank=True, verbose_name="カテゴリー")
+  category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="posts", null=True, blank=True, verbose_name="カテゴリー(option)")
 
-  tags = models.ManyToManyField(Tag, blank=True, related_name="posts", verbose_name="タグ")
+  tags = models.ManyToManyField(Tag, blank=True, related_name="posts", verbose_name="タグ(option)")
 
   #編集後そのidのページに戻る
   def get_absolute_url(self):

@@ -29,11 +29,21 @@
               <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
              </a>
             {% endif %}
+
             <p class="article-content">{{ post.content | safe }}</p>
 
-            {% if post.url %}
-            <small>参照URL: </small>
-            <p><a class="url" href="{{ post.url }}" target="_blank">{{ post.url }}</a></p>
+            {% if post.links.count %}
+            <div class="links">
+            <h6>参照URL: </h6>
+              {% for link in post.links_ordered %}
+                {% if link.title %}
+                  <small>{{ link.title }}</small>
+                {% else %}
+                  <small>(No Title)</small>
+                {% endif %}
+                <p class="mb-1"><a class="url" href="{{ url }}" target="_blank">{{ link }}</a></p>
+              {% endfor %}
+            </div>
             {% endif %}
 
             <small>カテゴリー: 

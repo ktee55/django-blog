@@ -108,7 +108,9 @@
                   Categories
                   <ul>
                     {% for category in categories %}
-                      <li><a href="{% url 'blog-category' category.name %}">{{ category }} ({{category.num_posts}})</a></li>
+                      {% if category.published_posts.count %}
+                        <li><a href="{% url 'blog-category' category.name %}">{{ category }} ({{category.published_posts.count }})</a></li>
+                      {% endif %}
                     {% endfor %}
                   </ul>
                 </li>
@@ -116,7 +118,9 @@
                   Tags
                   <ul>
                     {% for tag in tags %}
-                      <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{ tag.num_posts }})</a></li>
+                      {% if tag.published_posts.count %}
+                        <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{ tag.published_posts.count }})</a></li>
+                      {% endif %}
                     {% endfor %}
                   </ul>
                 </li>

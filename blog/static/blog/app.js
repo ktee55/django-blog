@@ -29275,64 +29275,73 @@ if (document.getElementById('photo_insert')) {
 }
 
 (function ($, $$) {
-  var form_control = function form_control() {
-    $('.navbar-toggler').on('click', function () {
-      $('#navbarToggle').classList.toggle('collapse');
-    });
-    var multiField = document.getElementsByClassName('multiField');
+  $('.navbar-toggler').on('click', function () {
+    $('#navbarToggle').classList.toggle('collapse');
+  });
 
-    for (var _i = 1; _i < multiField.length; _i++) {
-      multiField[_i].classList.add('hide');
+  var multi_form_control = function multi_form_control(cl) {
+    var el = document.getElementsByClassName(cl);
 
-      multiField[0].classList.add('mt-0');
+    for (var _i = 1; _i < el.length; _i++) {
+      el[_i].classList.add('hide');
+
+      el[0].classList.add('mt-0');
     }
 
     var i = 1;
     $('#add-form').on('click', function (e) {
       e.preventDefault();
-      multiField[i].classList.remove('hide');
+      el[i].classList.remove('hide');
       i++;
     });
     $('#remove-form').on('click', function (e) {
       i > 1 ? i-- : i;
       e.preventDefault();
-      multiField[i].classList.add('hide');
+      el[i].classList.add('hide');
     });
-  };
+  }; // multi_form_control
 
-  form_control();
-  var modal = $('.modal'); // let photos = $$('#photos img');
-  // // transfered to Photo.js(React Component)
-  // function insertImage() {
-  //   let image = '<a href="' + this.dataset.origin + '"><img src="' + this.dataset.medium + '"></a>';
-  //   let image = `<a href="${this.dataset.origin}"><img src="${this.dataset.medium}"></a>`;
-  //   $('#id_content').value += image;
-  // }
 
-  function expandModal() {
-    modal.classList.add('show-modal');
-  }
+  multi_form_control('url-form');
+  multi_form_control('multiField');
 
-  function closeModal(e) {
-    // console.log(e.target);
-    // let a = e.target
-    // let parents = [];
-    // while (a) {
-    //     parents.unshift(a);
-    //     a = a.parentNode;
-    //  }
-    //  console.log(parents);
-    if (!e.target.classList.contains('keep-modal')) {
-      modal.classList.remove('show-modal');
+  var modal_control = function modal_control() {
+    var modal = $('.modal'); // let photos = $$('#photos img');
+    // // transfered to Photo.js(React Component)
+    // function insertImage() {
+    //   let image = '<a href="' + this.dataset.origin + '"><img src="' + this.dataset.medium + '"></a>';
+    //   let image = `<a href="${this.dataset.origin}"><img src="${this.dataset.medium}"></a>`;
+    //   $('#id_content').value += image;
+    // }
+
+    function expandModal() {
+      modal.classList.add('show-modal');
     }
-  } // photos.forEach( photo => photo.on('click', insertImage));
+
+    function closeModal(e) {
+      // console.log(e.target);
+      // let a = e.target
+      // let parents = [];
+      // while (a) {
+      //     parents.unshift(a);
+      //     a = a.parentNode;
+      //  }
+      //  console.log(parents);
+      if (!e.target.classList.contains('keep-modal')) {
+        modal.classList.remove('show-modal');
+      }
+    } // photos.forEach( photo => photo.on('click', insertImage));
 
 
-  if ($('#expand-modal')) {
-    $('#expand-modal').on('click', expandModal);
-  }
+    if ($('#expand-modal')) {
+      $('#expand-modal').on('click', expandModal);
+    }
 
-  modal.on('click', closeModal); // // Without bing.js
+    modal.on('click', closeModal);
+  }; // modal_control
+
+
+  modal_control(); // // Without bing.js
   // let modal = document.querySelector('.modal');
   // let photos = document.querySelectorAll('#photos img');
   // function insertImage() {

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.decorators.http import condition
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -9,7 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Post, Comment, Category, Tag
 # from photos.models import Photo
-from .forms import CommentForm #, CategoryForm, TagForm
+from .forms import CommentForm, PostCreateForm, URLFormset
 # from photos.forms import UploadFileForm
 
 
@@ -17,7 +18,7 @@ class PostListView(ListView):
   model = Post
   # template_name = 'blog/home.html' #default -> <app>/<model>_<viewtype>.html
   context_object_name = 'posts'
-  ordering = ['-date_posted']
+  # ordering = ['-date_posted']
   paginate_by = 3
 
   def get_queryset(self):
@@ -27,24 +28,18 @@ class UserPostListView(ListView):
   model = Post
   template_name = 'blog/post_list.html' 
   context_object_name = 'posts'
-  # ordering = ['-date_posted']
   paginate_by = 3
 
   def get_queryset(self):
     user = get_object_or_404(User, username=self.kwargs.get('username'))
     return Post.objects.filter(author=user).order_by('-date_posted')
 
-# def post_detail(request, post_id):
-
-#   post = Post.objects.get(pk=post_id)
-#   public_posts = Post.objects.filter(draft=False)
-
 class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
   model = Post
     # context_object_name = 'post'
 
   def get_context_data(self, **kwargs):
-    # post = self.get_object()
+    post = self.get_object()
     context = super().get_context_data(**kwargs) 
     context["comment_form"] = CommentForm()
 
@@ -67,57 +62,48 @@ class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
         return True
     return False
 
-class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): #-> post_form.html
-  model = Post
-  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image', 'url']
-  # success_url = reverse_lazy('blog-home')
+@permission_required('is_staff')
+def add_post(request):
+    form = PostCreateForm(request.POST or None)
+    context = {'form': form}
+    if request.method == 'POST' and form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        formset = URLFormset(request.POST, files=request.FILES, instance=post)  # 今回はファイルなのでrequest.FILESが必要
+        if formset.is_valid():
+            post.save()
+            formset.save()
+        # エラーメッセージつきのformsetをテンプレートへ渡すため、contextに格納
+        else:
+            context['formset'] = formset
 
-  #追加データを渡す
-  # def get_context_data(self, **kwargs):
-  #   context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す
-  #   context["photos"] = Photo.objects.all().order_by('-id')
-  #   context["upload_form"] = UploadFileForm()
-  #   return context
+    # GETのとき
+    else:
+        # 空のformsetをテンプレートへ渡す
+        context['formset'] = URLFormset()
 
-  def form_valid(self, form):
-    form.instance.author = self.request.user
-    return super().form_valid(form)
+    return render(request, 'blog/post_form.html', context)
 
-  # def get_context_data(self, **kwargs):
-  #   context = super().get_context_data(**kwargs) 
-  #   context["category_form"] = CategoryForm()
-  #   context["tag_form"] = TagForm()
-  #   return context
+@login_required
+def update_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.author = request.user
+    form = PostCreateForm(request.POST or None, instance=post)
+    formset = URLFormset(request.POST or None, files=request.FILES or None, instance=post)
+    if request.method == 'POST' and form.is_valid() and formset.is_valid() and request.user == post.author:
+        form.save()
+        formset.save()
+        # 編集ページを再度表示
+        return redirect('post-detail', pk=pk)
 
-  #ユーザーがスタッフの時にのみ許可
-  def test_func(self):
-    if self.request.user.is_staff:
-        return True
-    return False
+    context = {
+        'post': post,
+        'form': form,
+        'formset': formset,
+        'edit': 1,
+    }
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #-> post_form.html
-  model = Post
-  fields = ['title', 'content', 'category', 'tags', 'draft', 'featured_image', 'url']
-
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す
-    context["edit"] = 1
-    # context["photos"] = Photo.objects.all()
-    # context["upload_form"] = UploadFileForm()
-    # context["category_form"] = CategoryForm()
-    # context["tag_form"] = TagForm()
-    return context
-
-  def form_valid(self, form):
-    form.instance.author = self.request.user
-    return super().form_valid(form)
-
-  #ユーザーが投稿者の時にのみ許可
-  def test_func(self):
-    post = self.get_object()
-    if self.request.user == post.author:
-        return True
-    return False
+    return render(request, 'blog/post_form.html', context)
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): #-> post_confirm_delete.html
   model = Post
@@ -203,7 +189,7 @@ class CategoryPostListView(ListView):
 
   def get_queryset(self):
     category = get_object_or_404(Category, name=self.kwargs.get('category_name'))
-    return category.posts.all()
+    return category.posts.filter(draft=False).order_by('-date_posted')
 
 class TagPostListView(ListView):
   model = Post
@@ -213,12 +199,12 @@ class TagPostListView(ListView):
 
   def get_queryset(self):
     tag = get_object_or_404(Tag, name=self.kwargs.get('tag_name'))
-    return tag.posts.all()
+    return tag.posts.filter(draft=False).order_by('-date_posted')
 
 def archives(request):
     month = request.GET.get('month')
     year = request.GET.get('year')
-    posts = Post.objects.filter(date_posted__year=year, date_posted__month=month)
+    posts = Post.objects.filter(date_posted__year=year, date_posted__month=month, draft=False).order_by('-date_posted')
     context = {
         'posts': posts,
         'is_archives': 1,

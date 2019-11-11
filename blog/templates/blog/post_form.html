@@ -14,6 +14,20 @@
           {% endif %}
         </legend>
         {{ form|crispy }}
+        
+        <h4 class="mt-5 mb-4">参照URL</h4>
+        {{ formset.management_form }}
+        {% for url_form in formset %}
+        <div class="url-form">
+          {{ url_form|crispy }}
+        </div>
+        {% endfor %}
+
+        <div>
+          <i id="add-form" class="far fa-plus-square"></i>
+          <i id="remove-form" class="far fa-minus-square"></i>
+        </div>
+
       </fieldset>
       <div class="form-group">
       {% if edit %}

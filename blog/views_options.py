@@ -20,6 +20,46 @@ def home(request):
     }
     return render(request, 'blog/home.html', context)
 
+class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): #-> post_form.html
+  model = Post
+  fields = ['title', 'content', 'featured_image', 'category', 'tags', 'draft']
+  # success_url = reverse_lazy('blog-home')
+
+  def form_valid(self, form):
+    form.instance.author = self.request.user
+    return super().form_valid(form)
+
+  #ユーザーがスタッフの時にのみ許可
+  def test_func(self):
+    if self.request.user.is_staff:
+        return True
+    return False
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #-> post_form.html
+  model = Post
+  fields = ['title', 'content', 'featured_image', 'category', 'tags', 'draft']
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs) # はじめに継承元のメソッドを呼び出す
+    context["edit"] = 1
+    # context["photos"] = Photo.objects.all()
+    # context["upload_form"] = UploadFileForm()
+    # context["category_form"] = CategoryForm()
+    # context["tag_form"] = TagForm()
+    return context
+
+  def form_valid(self, form):
+    form.instance.author = self.request.user
+    return super().form_valid(form)
+
+  #ユーザーが投稿者の時にのみ許可
+  def test_func(self):
+    post = self.get_object()
+    if self.request.user == post.author:
+        return True
+    return False
+
+
 def add_comment(request, post_id):
 
     #Still Need Validation!!,
