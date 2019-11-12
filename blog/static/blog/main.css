@@ -351,3 +351,18 @@ ul li {
   margin-bottom: 2rem;
 }
 
+#comment-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#comment-head div {
+  display: flex;
+  align-items: center;
+}
+
+#comment-head div p {
+  margin-bottom: 0;
+}
+
