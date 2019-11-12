@@ -66,10 +66,10 @@
 
             {% if user.is_authenticated %}
             <div class="comment">
-              {% for comment in post.comments.all %}
+              {% for comment in post.comments_ordered.all %}
 
               <!-- 投稿者にのみコメント承認権を与える(表示させる) -->
-              {% if post.author ==  user or comment.approved_comment %}
+              {% if comment.approved_comment  or  post.author == user  or  comment.author == user %}
 
                   <img src="{{ comment.author.profile.image.url }}" alt="" class="rounded-circle comment-img">
 
@@ -84,7 +84,7 @@
                       {% endif %}
                     </div>
 
-                  <small class="text-muted">{{ post.date_posted|date:"Y-m-j" }}</small>
+                  <small class="text-muted">{{ comment.date_posted|date:"Y-m-j" }}</small>
 
                   <p>{{ comment }}</p>
 
@@ -94,10 +94,15 @@
                   {% endif %}
 
                   {% if not comment.approved_comment %}
-                    <div>
-                    <a class="btn btn-default" href="{% url 'comment-delete' comment.id %}">Reject</a>
-                    <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
-                    </div>
+                    {% if post.author == user %}
+                      <div>
+                        <a class="btn btn-default" href="{% url 'comment-delete' comment.id %}">Reject</a>
+                        <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
+                      </div>
+                    {% endif %}
+                    {% if comment.author == user %}
+                      <small class="text-danger">投稿者によるコメント承認待ちです。</small>
+                    {% endif %}
                   {% endif %}
 
                 {% endif %}
@@ -107,20 +112,20 @@
               {% endfor %}
             </div> <!-- .comment -->
 
-            {% if user.is_authenticated %}
-            <!-- <a class="btn btn-default" href="{% url 'comment-create' post.id %}">Add comment</a> -->
-            <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle comment-img"> {{ user }}
-            <div id="add_comment">
-              <form method="POST" action="{% url 'comment-create' post.id %}" class="post-form">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                  {% load crispy_forms_tags %}
-                  {{ comment_form|crispy }}
-                  <button class="btn btn-outline-info" type="submit">コメントする</button>
-                </fieldset>
-              </form>
-            </div>
-            {% endif %}
+              {% if user.is_authenticated %}
+              <!-- <a class="btn btn-default" href="{% url 'comment-create' post.id %}">Add comment</a> -->
+              <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle comment-img"> {{ user }}
+              <div id="add_comment">
+                <form method="POST" action="{% url 'comment-create' post.id %}" class="post-form">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                    {% load crispy_forms_tags %}
+                    {{ comment_form|crispy }}
+                    <button class="btn btn-outline-info" type="submit">コメントする</button>
+                  </fieldset>
+                </form>
+              </div>
+              {% endif %}
 
             {% else %}
               <p class="mt-2">

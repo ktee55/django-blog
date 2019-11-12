@@ -58,6 +58,9 @@ class Post(models.Model):
   def links_ordered(self):
     return self.links.order_by('id')
 
+  def comments_ordered(self):
+    return self.comments.order_by('date_posted')
+
   # def published_post(self):
   #   if not self.draft:
   #     return 

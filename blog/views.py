@@ -87,7 +87,10 @@ def add_post(request):
 @login_required
 def update_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post.author = request.user
+    if post.author == request.user:
+      post.author = request.user
+    else:
+      return redirect('blog-home')
     form = PostCreateForm(request.POST or None, instance=post)
     formset = URLFormset(request.POST or None, files=request.FILES or None, instance=post)
     if request.method == 'POST' and form.is_valid() and formset.is_valid() and request.user == post.author:

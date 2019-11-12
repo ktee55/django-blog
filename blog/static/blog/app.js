@@ -29158,7 +29158,7 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "insertImage", function (data) {
       // console.log(e.target.dataset.medium)
-      var image = "<a href=\"".concat(data.origin, "\"><img src=\"").concat(data.medium, "\"></a>");
+      var image = "<a href=\"".concat(data.origin, "\" target=\"_blank\"><img src=\"").concat(data.medium, "\"></a>");
       document.querySelector('#id_content').value += image;
     });
 
@@ -29279,31 +29279,58 @@ if (document.getElementById('photo_insert')) {
     $('#navbarToggle').classList.toggle('collapse');
   });
 
-  var multi_form_control = function multi_form_control(cl) {
-    var el = document.getElementsByClassName(cl);
+  var multi_form_control = function multi_form_control() {
+    // 2番目以降のフォームを隠す（１個だけ表示する）
+    var hideOthers = function hideOthers(elem) {
+      var el = document.getElementsByClassName(elem);
 
-    for (var _i = 1; _i < el.length; _i++) {
-      el[_i].classList.add('hide');
-
-      el[0].classList.add('mt-0');
-    }
-
-    var i = 1;
-    $('#add-form').on('click', function (e) {
-      e.preventDefault();
-      el[i].classList.remove('hide');
-      i++;
-    });
-    $('#remove-form').on('click', function (e) {
-      i > 1 ? i-- : i;
-      e.preventDefault();
-      el[i].classList.add('hide');
-    });
-  }; // multi_form_control
+      for (var i = 1; i < el.length; i++) {
+        el[i].classList.add('hide');
+        el[0].classList.add('mt-0');
+      }
+    }; // hideOthers
 
 
-  multi_form_control('url-form');
-  multi_form_control('multiField');
+    hideOthers('link-form'); //Post新規投稿ページ
+
+    hideOthers('multiField'); //Photo Upload Page
+    // クリックで１個ずつフォームの表示・非表示
+
+    var toggleForms = function toggleForms(elem) {
+      var el = document.getElementsByClassName(elem);
+      var i = 1;
+      $('#add-form').on('click', function (e) {
+        e.preventDefault();
+        el[i].classList.remove('hide');
+        i++;
+      });
+      $('#remove-form').on('click', function (e) {
+        i > 1 ? i-- : i;
+        e.preventDefault();
+        el[i].classList.add('hide');
+      });
+    }; // toggleForms
+
+
+    toggleForms('link-form'); //Post新規投稿ページ
+
+    toggleForms('multiField'); //Photo Upload Page
+    // Post更新ページにて既にデータが入ってるフォームのみ表示
+
+    var linkForms = document.querySelectorAll('.link-form-edit .urlinput');
+    linkForms.forEach(function (form) {
+      // console.log(form.value);
+      if (form.value == "" || form.value == null) {
+        // console.log('hello');
+        form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable');
+      }
+    }); // 空のフォームは表示・非表示をコントロールできるように
+
+    toggleForms('togglable');
+  }; //multi_form_control
+
+
+  multi_form_control();
 
   var modal_control = function modal_control() {
     var modal = $('.modal'); // let photos = $$('#photos img');
