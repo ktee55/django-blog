@@ -142,6 +142,8 @@ def update_comment(request, comment_id):
       form = CommentForm(request.POST, instance=comment)
       if form.is_valid():
           comment = form.save(commit=False)
+          if not comment.post.author == request.user:
+            comment.approved_comment = False
           if comment.author == request.user :
             comment.save()
             return redirect('post-detail', pk=comment.post.pk)

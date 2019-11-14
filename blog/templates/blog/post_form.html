@@ -15,22 +15,24 @@
         </legend>
         {{ form|crispy }}
         
-        <h4 class="mt-5 mb-4">参照URL<small> ※登録できるのは10個までです。</small></h4>
-        {{ formset.management_form }}
-        {% for url_form in formset %}
-          {% if edit %}
-            <div class="link-form-edit">
-          {% else %}
-            <div class="link-form">
-          {% endif %}
-              {{ url_form|crispy }}
-            </div>
-        {% endfor %}
+        <section class="link-formset">
+          <h4 class="mb-4">参照URL<small> ※登録できるのは10個までです。</small></h4>
+          {{ formset.management_form }}
+          {% for url_form in formset %}
+            {% if edit %}
+              <div class="link-form-edit">
+            {% else %}
+              <div class="link-form">
+            {% endif %}
+                {{ url_form|crispy }}
+              </div>
+          {% endfor %}
 
-        <div>
-          <i id="add-form" class="far fa-plus-square"></i>
-          <i id="remove-form" class="far fa-minus-square"></i>
-        </div>
+          <div>
+            <i id="add-form" class="far fa-plus-square"></i>
+            <i id="remove-form" class="far fa-minus-square"></i>
+          </div>
+        </section>
 
       </fieldset>
       <div class="form-group">

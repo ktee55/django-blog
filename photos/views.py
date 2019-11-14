@@ -44,20 +44,20 @@ class PhotoDetailView(UserPassesTestMixin, DetailView):
         return True
     return False
 
-class PhotoCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): 
-  model = Photo
-  fields = ['origin', 'category', 'tags', 'private']
-  success_url = reverse_lazy('photo-list')
+# class PhotoCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView): 
+#   model = Photo
+#   fields = ['origin', 'category', 'tags', 'private']
+#   success_url = reverse_lazy('photo-list')
 
-  def form_valid(self, form):
-    form.instance.author = self.request.user
-    return super().form_valid(form)
+#   def form_valid(self, form):
+#     form.instance.author = self.request.user
+#     return super().form_valid(form)
 
-  #ユーザーがスタッフの時にのみ許可
-  def test_func(self):
-    if self.request.user.is_staff:
-        return True
-    return False
+#   #ユーザーがスタッフの時にのみ許可
+#   def test_func(self):
+#     if self.request.user.is_staff:
+#         return True
+#     return False
 
 @permission_required('is_staff')
 def create_photo(request):

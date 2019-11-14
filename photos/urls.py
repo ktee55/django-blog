@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import PhotoListView, PhotoDetailView, create_photo, PhotoCreateView, PhotoUpdateView, PhotoDeleteView
+from .views import PhotoListView, PhotoDetailView, create_photo, PhotoUpdateView, PhotoDeleteView
 
 urlpatterns = [
     path('', PhotoListView.as_view(), name='photo-list'),
