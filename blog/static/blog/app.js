@@ -29299,16 +29299,22 @@ if (document.getElementById('photo_insert')) {
     var toggleForms = function toggleForms(elem) {
       var el = document.getElementsByClassName(elem);
       var i = 1;
-      $('#add-form').on('click', function (e) {
-        e.preventDefault();
-        el[i].classList.remove('hide');
-        i++;
-      });
-      $('#remove-form').on('click', function (e) {
-        i > 1 ? i-- : i;
-        e.preventDefault();
-        el[i].classList.add('hide');
-      });
+
+      if ($('#add-form')) {
+        $('#add-form').on('click', function (e) {
+          e.preventDefault();
+          el[i].classList.remove('hide');
+          i++;
+        });
+      }
+
+      if ($('#remove-form')) {
+        $('#remove-form').on('click', function (e) {
+          i > 1 ? i-- : i;
+          e.preventDefault();
+          el[i].classList.add('hide');
+        });
+      }
     }; // toggleForms
 
 
@@ -29368,7 +29374,9 @@ if (document.getElementById('photo_insert')) {
   }; // modal_control
 
 
-  modal_control(); // // Without bing.js
+  if ($('.modal')) {
+    modal_control();
+  } // // Without bing.js
   // let modal = document.querySelector('.modal');
   // let photos = document.querySelectorAll('#photos img');
   // function insertImage() {
@@ -29386,6 +29394,7 @@ if (document.getElementById('photo_insert')) {
   // photos.forEach( photo => photo.addEventListener('click', insertImage));
   // document.querySelector('#expand-modal').addEventListener('click', expandModal);
   // modal.addEventListener('click', closeModal);
+
 })(_components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$"], _components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$$"]);
 
 /***/ }),

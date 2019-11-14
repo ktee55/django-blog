@@ -64,15 +64,16 @@ class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
 
 @permission_required('is_staff')
 def add_post(request):
-    form = PostCreateForm(request.POST or None)
+    form = PostCreateForm(request.POST or None, files=request.FILES or None)
     context = {'form': form}
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.author = request.user
-        formset = URLFormset(request.POST, files=request.FILES, instance=post)  # 今回はファイルなのでrequest.FILESが必要
+        formset = URLFormset(request.POST, instance=post)  # 今回はファイルなのでrequest.FILESが必要
         if formset.is_valid():
             post.save()
             formset.save()
+            return redirect('blog-home')
         # エラーメッセージつきのformsetをテンプレートへ渡すため、contextに格納
         else:
             context['formset'] = formset
@@ -89,8 +90,8 @@ def update_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if not post.author == request.user:
       return redirect('blog-home')
-    form = PostCreateForm(request.POST or None, instance=post)
-    formset = URLFormset(request.POST or None, files=request.FILES or None, instance=post)
+    form = PostCreateForm(request.POST or None, files=request.FILES or None, instance=post)
+    formset = URLFormset(request.POST or None, instance=post)
     if request.method == 'POST' and form.is_valid() and formset.is_valid() and request.user == post.author:
         form.save()
         formset.save()

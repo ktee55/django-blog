@@ -16,7 +16,7 @@
         {{ form|crispy }}
         
         <section class="link-formset">
-          <h4 class="mb-4">参照URL<small> ※登録できるのは10個までです。</small></h4>
+          <h4 class="mb-4">参照URL<small> ※最大10個まで登録可能です。</small></h4>
           {{ formset.management_form }}
           {% for url_form in formset %}
             {% if edit %}

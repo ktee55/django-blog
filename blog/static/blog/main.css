@@ -206,7 +206,7 @@ div.content-section {
 
 div.content-section #expand-modal {
   position: absolute;
-  top: 160px;
+  top: 222px;
   right: 20px;
 }
 
@@ -325,6 +325,10 @@ ul.image-list li img {
 
 .link-formset {
   margin-top: 3rem;
+}
+
+.link-formset small {
+  font-size: 0.9rem;
 }
 
 .link-formset .far {
