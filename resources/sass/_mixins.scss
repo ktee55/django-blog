@@ -1,0 +1,148 @@
+
+@mixin clearfix {
+   &:before,
+   &:after {
+      content: '';
+      display: table;
+   }
+   &:after {
+      clear: both;
+   }
+} //clearfix
+
+
+@mixin image_rep {
+   font:0/0 a; 
+   text-shadow:none; 
+   color:transparent;
+} //image_rep
+
+
+@mixin centering {
+   @include display-flex();
+   @include align-items(center);
+   @include justify-content(center);
+} //centering
+
+
+@mixin gradientBorders($color) {
+   @include box-shadow( 
+      lighten($color, 15) 0 0 0 10px inset,
+      lighten($color, 10) 0 0 0 20px inset,
+      lighten($color, 5) 0 0 0 30px inset
+   );
+}
+
+
+// Gradient Transition Hack!!
+@mixin gradientTransition(
+   $direction: top,
+   $color: $kihada,
+   $duration: 0.5s,
+   $ease: ease-out
+) {
+   position: relative;
+   z-index:1;
+
+   &:after {
+         position: absolute;
+         content: '';
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+
+         @include background-image(
+            linear-gradient(
+               $direction, darken($color, 20), $color
+            )
+         );
+
+         transition: opacity $duration $ease;
+         z-index: 2;
+         opacity: 0;
+      } //a:after
+
+      &:hover:after {
+         opacity: 1;
+      } //a:hover:after
+} //transitionHack
+
+
+
+@mixin button($direction1: bottom, $color1: $kuchiba, $direction2: top, $color2: $yamabuki, $duration: 0.5s, $ease: ease-out) {
+   background: $color1;
+   @include background-image(
+      linear-gradient(
+         $direction1, lighten($color1, 20), $color1
+      )
+   );
+   @include gradientTransition($direction2, $color2, $duration, $ease);
+} //button
+
+
+
+
+@mixin backImage(
+   $image,
+   // $grDir: to bottom,
+   // $opStart: 0,
+   // $opEnd: 0,
+   $bgPos: center center,
+   $bgAtt: fixed
+   ) {
+  background: 
+  // linear-gradient (
+  //  $grDir,
+  //  rgba(0,0,0, $opStart),
+  //  rgba(0,0,0, $opEnd)
+  // ),
+  url($image); 
+  background-repeat: no-repeat;
+  background-position: $bgPos;
+  background-attachment: $bgAtt;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+} //backImage
+
+
+@mixin bgCover($bgPos:center center, $bgAtt:fixed) {
+   background-repeat: no-repeat;
+   background-position: $bgPos;
+   background-attachment: $bgAtt;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}
+
+
+
+@mixin round_button($buttonBaseColor: #e95d4b) {
+         @include background(
+            linear-gradient(
+               saturate(lighten($buttonBaseColor, 10%), 5%),
+               darken($buttonBaseColor, 10%)
+               )
+            );
+
+         @include box-shadow(#eaeaea 0 0 0 4px, fade-out(white, 0.75) 0 1px 0 1px inset);
+         border: $buttonBaseColor 1px solid;
+
+         &:hover {
+            $buttonBaseColor: saturate(lighten($buttonBaseColor, 5%), 10%);
+            @include background(
+               linear-gradient(
+                  saturate(lighten($buttonBaseColor, 10%), 5%),
+                  darken($buttonBaseColor, 10%)
+                  )
+               );
+
+            @include box-shadow(#eaeaea 0 0 0 4px, fade-out(white, 0.75) 0 1px 0 1px inset);
+            border: $buttonBaseColor 1px solid;
+         }
+}
+
+

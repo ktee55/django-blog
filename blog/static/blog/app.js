@@ -86,6 +86,628 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./django_project/resources/js/PhotoInsert.js":
+/*!****************************************************!*\
+  !*** ./django_project/resources/js/PhotoInsert.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_Dropzone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Dropzone */ "./django_project/resources/js/components/Dropzone.js");
+/* harmony import */ var _components_PhotoList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/PhotoList */ "./django_project/resources/js/components/PhotoList.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+var PhotoInsert =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(PhotoInsert, _React$Component);
+
+  function PhotoInsert(props) {
+    var _this;
+
+    _classCallCheck(this, PhotoInsert);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PhotoInsert).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "getData", function () {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/photos/').then(function (res) {
+        // console.log(res.data)
+        _this.setState({
+          photos: res.data
+        }); // console.log(res.data);
+
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "addPhoto", function (newPhoto) {
+      // console.log(newPhoto)
+      _this.setState(function (state) {
+        return {
+          photos: [newPhoto].concat(_toConsumableArray(state.photos))
+        };
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "insertImage", function (data) {
+      // console.log(e.target.dataset.medium)
+      var image = "<a href=\"".concat(data.origin, "\"><img src=\"").concat(data.medium, "\"></a>");
+      document.querySelector('#id_content').value += image;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "fileUpload", function (file) {
+      var url = '/api/photos/';
+      var formData = new FormData();
+      formData.append('origin', file);
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+
+      _this.setState({
+        loading: true
+      });
+
+      return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, formData, config);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "postData", function (e) {
+      e.preventDefault(); // this.fileUpload(this.state.file).then(this.getData());
+
+      _this.fileUpload(_this.state.file).then(function (res) {
+        _this.addPhoto(res.data);
+
+        _this.setState({
+          loading: false
+        }); // this.insertImage(res.data);
+
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "dropChange", function (file) {
+      // console.log(file);
+      _this.setState({
+        file: file
+      });
+    });
+
+    _this.state = {
+      photos: [],
+      file: null,
+      currentPage: 1,
+      setPerPage: 10,
+      loading: false
+    };
+    return _this;
+  }
+
+  _createClass(PhotoInsert, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getData();
+    }
+  }, {
+    key: "render",
+    // showList = () => {
+    //   document.querySelector('.photo-upload').style.display = 'none';
+    //   document.querySelector('.photo-list').style.display = 'block';
+    // }
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "photo-upload"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Dropzone__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        dropChange: this.dropChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary keep-modal",
+        onClick: this.postData
+      }, "\u753B\u50CF\u3092\u30A2\u30C3\u30D7\u30ED\u30FC\u30C9"), this.state.loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-warning loading",
+        type: "button",
+        disabled: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "spinner-grow spinner-grow-sm",
+        role: "status",
+        "aria-hidden": "true"
+      }), "Loading...")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_PhotoList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        photos: this.state.photos
+      })));
+    } //render
+
+  }]);
+
+  return PhotoInsert;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (PhotoInsert);
+
+/***/ }),
+
+/***/ "./django_project/resources/js/app.js":
+/*!********************************************!*\
+  !*** ./django_project/resources/js/app.js ***!
+  \********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_bling_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/bling.js */ "./django_project/resources/js/components/bling.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _PhotoInsert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PhotoInsert */ "./django_project/resources/js/PhotoInsert.js");
+
+
+
+
+
+if (document.querySelector('.photo_insert')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_PhotoInsert__WEBPACK_IMPORTED_MODULE_3__["default"], null), document.querySelector('.photo_insert'));
+}
+
+(function ($, $$) {
+  $('.navbar-toggler').on('click', function () {
+    $('#navbarToggle').classList.toggle('collapse');
+  });
+
+  var multi_form_control = function multi_form_control() {
+    // 2番目以降のフォームを隠す（１個だけ表示する）
+    var hideOthers = function hideOthers(elem) {
+      var el = document.getElementsByClassName(elem);
+
+      for (var i = 1; i < el.length; i++) {
+        el[i].classList.add('hide');
+        el[0].classList.add('mt-0');
+      }
+    }; // hideOthers
+
+
+    hideOthers('link-form'); //Post新規投稿ページ
+
+    hideOthers('multiField'); //Photo Upload Page
+    // クリックで１個ずつフォームの表示・非表示
+
+    var toggleForms = function toggleForms(elem) {
+      var el = document.getElementsByClassName(elem);
+      var i = 1;
+
+      if ($('#add-form')) {
+        $('#add-form').on('click', function (e) {
+          e.preventDefault();
+          el[i].classList.remove('hide');
+          i++;
+        });
+      }
+
+      if ($('#remove-form')) {
+        $('#remove-form').on('click', function (e) {
+          i > 1 ? i-- : i;
+          e.preventDefault();
+          el[i].classList.add('hide');
+        });
+      }
+    }; // toggleForms
+
+
+    toggleForms('link-form'); //Post新規投稿ページ
+
+    toggleForms('multiField'); //Photo Upload Page
+    // Post更新ページにて既にデータが入ってるフォームのみ表示
+
+    var linkForms = document.querySelectorAll('.link-form-edit .urlinput');
+    linkForms.forEach(function (form) {
+      // console.log(form.value);
+      if (form.value == "" || form.value == null) {
+        // console.log('hello');
+        form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable');
+      }
+    }); // 空のフォームは表示・非表示をコントロールできるように
+
+    toggleForms('togglable');
+  }; //multi_form_control
+
+
+  multi_form_control();
+
+  var modal_control = function modal_control() {
+    var modal = $('.modal');
+
+    function expandModal() {
+      modal.classList.add('show-modal');
+    }
+
+    function closeModal(e) {
+      if (!e.target.classList.contains('keep-modal')) {
+        modal.classList.remove('show-modal');
+      }
+    }
+
+    if ($('#expand-modal')) {
+      $('#expand-modal').on('click', expandModal);
+    }
+
+    modal.on('click', closeModal);
+  }; // modal_control
+
+
+  if ($('.modal')) {
+    modal_control();
+  } // // Without bing.js
+  // let modal = document.querySelector('.modal');
+  // let photos = document.querySelectorAll('#photos img');
+  // function insertImage() {
+  //   let image = '<a href="' + this.dataset.origin + '"><img src="' + this.dataset.medium + '"></a>';
+  //   document.querySelector('#id_content').value += image;
+  // }
+  // function expandModal() {
+  //   modal.classList.add('show');
+  // }
+  // function closeModal(e) {
+  //   // console.log(e);
+  //   // if(e.target==='form') return;
+  //   modal.classList.remove('show');
+  // }
+  // photos.forEach( photo => photo.addEventListener('click', insertImage));
+  // document.querySelector('#expand-modal').addEventListener('click', expandModal);
+  // modal.addEventListener('click', closeModal);
+
+})(_components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$"], _components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$$"]);
+
+/***/ }),
+
+/***/ "./django_project/resources/js/components/Dropzone.js":
+/*!************************************************************!*\
+  !*** ./django_project/resources/js/components/Dropzone.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dropzone */ "./node_modules/react-dropzone/dist/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var MyDropzone =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(MyDropzone, _Component);
+
+  function MyDropzone() {
+    var _this;
+
+    _classCallCheck(this, MyDropzone);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MyDropzone).call(this));
+
+    _this.onDrop = function (files) {
+      // this.setState({files})
+      _this.setState({
+        description: files[0].name
+      });
+
+      _this.props.dropChange(files[0]);
+    };
+
+    _this.state = {
+      // files: [],
+      description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
+    };
+    return _this;
+  }
+
+  _createClass(MyDropzone, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      // const files = this.state.files.map(file => (
+      //   <li key={file.name}>
+      //     {file.name} - {file.size} bytes
+      //   </li>
+      // ));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_dropzone__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        onDrop: this.onDrop
+      }, function (_ref) {
+        var getRootProps = _ref.getRootProps,
+            getInputProps = _ref.getInputProps;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          className: "dropzone-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", getRootProps({
+          className: 'dropzone keep-modal'
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({}, getInputProps(), {
+          type: "file",
+          className: "keep-modal"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
+          className: "keep-modal"
+        }, _this2.state.description)));
+      });
+    }
+  }]);
+
+  return MyDropzone;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (MyDropzone); // import React from 'react';
+// import {useDropzone} from 'react-dropzone';
+// function MyDropzone(props) {
+//   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
+//     onDrop:  acceptedFiles => {
+//       document.querySelector('.dropzone p').innerHTML({files})
+//       props.dropChange(acceptedFiles[0])
+//     }
+//   });
+//   const files = acceptedFiles.map(file => (
+//     <li key={file.path}>
+//       {file.path} - {file.size} bytes
+//     </li>
+//   ));
+//   return (
+//     <section className="dropzone-container">
+//       <div {...getRootProps({className: 'dropzone keep-modal'})}>
+//         <input {...getInputProps()} className="keep-modal"/>
+//         <p className="keep-modal">画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。</p>
+//       </div>
+//       <aside>
+//         <ul>{files}</ul>
+//       </aside>
+//     </section>
+//   );
+// }
+// export default MyDropzone;
+
+/***/ }),
+
+/***/ "./django_project/resources/js/components/Pagination.js":
+/*!**************************************************************!*\
+  !*** ./django_project/resources/js/components/Pagination.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var Pagination = function Pagination(_ref) {
+  var currentPage = _ref.currentPage,
+      lastPage = _ref.lastPage,
+      paginate = _ref.paginate,
+      toPreviousPage = _ref.toPreviousPage,
+      toNextPage = _ref.toNextPage;
+  var pageNumbers = [];
+
+  for (var i = 1; i <= lastPage; i++) {
+    pageNumbers.push(i);
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "pagination"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: 'page-item ' + (currentPage === 1 ? 'disabled' : '')
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: toPreviousPage,
+    className: "page-link keep-modal"
+  }, "Previous")), pageNumbers.map(function (number) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: number,
+      className: 'page-item ' + (number === currentPage ? 'active' : '')
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: function onClick() {
+        return paginate(number);
+      },
+      className: "page-link keep-modal mobile-off"
+    }, number));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: 'page-item ' + (currentPage === lastPage ? 'disabled' : '')
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: toNextPage,
+    href: "!#",
+    className: "page-link keep-modal"
+  }, "Next"))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Pagination);
+
+/***/ }),
+
+/***/ "./django_project/resources/js/components/PhotoList.js":
+/*!*************************************************************!*\
+  !*** ./django_project/resources/js/components/PhotoList.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination */ "./django_project/resources/js/components/Pagination.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+var PhotoList = function PhotoList(props) {
+  // const [loading, setLoading] = useState(false);
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+      _useState2 = _slicedToArray(_useState, 2),
+      currentPage = _useState2[0],
+      setCurrentPage = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(8),
+      _useState4 = _slicedToArray(_useState3, 1),
+      photosPerPage = _useState4[0];
+
+  var insertImageFromList = function insertImageFromList(e) {
+    // console.log(e.target.dataset.medium)
+    var image = "<a href=\"".concat(e.target.dataset.origin, "\"><img src=\"").concat(e.target.dataset.medium, "\"></a>");
+    document.querySelector('#id_content').value += image;
+  };
+
+  var hideList = function hideList() {
+    document.querySelector('.photo-upload').style.display = 'block';
+    document.querySelector('.photo-list').style.display = 'none';
+  };
+
+  var indexOfLastPhoto = currentPage * photosPerPage;
+  var indexOfFirstPhoto = indexOfLastPhoto - photosPerPage;
+  var currentPhotos = props.photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
+  var lastPage = Math.ceil(props.photos.length / photosPerPage); // Change page
+
+  var paginate = function paginate(pageNumber) {
+    return setCurrentPage(pageNumber);
+  };
+
+  var toPreviousPage = function toPreviousPage() {
+    return setCurrentPage(currentPage - 1);
+  };
+
+  var toNextPage = function toNextPage() {
+    return setCurrentPage(currentPage + 1);
+  }; // render() {
+
+
+  var elements = currentPhotos.map(function (photo, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: photo.id
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      className: "thumb",
+      onClick: insertImageFromList,
+      src: photo.thumbnail,
+      "data-medium": photo.medium,
+      "data-origin": photo.origin
+    }));
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "photo-list"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u753B\u50CF\u3092\u633F\u5165")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, elements), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pagination__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    currentPage: currentPage,
+    lastPage: lastPage,
+    paginate: paginate,
+    toPreviousPage: toPreviousPage,
+    toNextPage: toNextPage
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PhotoList);
+
+/***/ }),
+
+/***/ "./django_project/resources/js/components/bling.js":
+/*!*********************************************************!*\
+  !*** ./django_project/resources/js/components/bling.js ***!
+  \*********************************************************/
+/*! exports provided: $, $$ */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "$", function() { return $; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "$$", function() { return $$; });
+// based on https://gist.github.com/paulirish/12fb951a8b893a454b32
+var $ = document.querySelector.bind(document);
+var $$ = document.querySelectorAll.bind(document);
+
+Node.prototype.on = window.on = function (name, fn) {
+  this.addEventListener(name, fn);
+};
+
+NodeList.prototype.__proto__ = Array.prototype; // eslint-disable-line
+
+NodeList.prototype.on = NodeList.prototype.addEventListener = function (name, fn) {
+  this.forEach(function (elem) {
+    elem.on(name, fn);
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./django_project/resources/sass/main.scss":
+/*!*************************************************!*\
+  !*** ./django_project/resources/sass/main.scss ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./node_modules/attr-accept/dist/index.js":
 /*!************************************************!*\
   !*** ./node_modules/attr-accept/dist/index.js ***!
@@ -29077,648 +29699,15 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/js/PhotoInsert.js":
-/*!*************************************!*\
-  !*** ./resources/js/PhotoInsert.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_Dropzone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Dropzone */ "./resources/js/components/Dropzone.js");
-/* harmony import */ var _components_PhotoList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/PhotoList */ "./resources/js/components/PhotoList.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-var PhotoInsert =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(PhotoInsert, _React$Component);
-
-  function PhotoInsert(props) {
-    var _this;
-
-    _classCallCheck(this, PhotoInsert);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(PhotoInsert).call(this, props));
-
-    _defineProperty(_assertThisInitialized(_this), "getData", function () {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/photos/').then(function (res) {
-        // console.log(res.data)
-        _this.setState({
-          photos: res.data
-        }); // console.log(res.data);
-
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "addPhoto", function (newPhoto) {
-      // console.log(newPhoto)
-      _this.setState(function (state) {
-        return {
-          photos: [newPhoto].concat(_toConsumableArray(state.photos))
-        };
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "insertImage", function (data) {
-      // console.log(e.target.dataset.medium)
-      var image = "<a href=\"".concat(data.origin, "\" target=\"_blank\"><img src=\"").concat(data.medium, "\"></a>");
-      document.querySelector('#id_content').value += image;
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "fileUpload", function (file) {
-      var url = '/api/photos/';
-      var formData = new FormData();
-      formData.append('origin', file);
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-
-      _this.setState({
-        loading: true
-      });
-
-      return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, formData, config);
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "postData", function (e) {
-      e.preventDefault(); // this.fileUpload(this.state.file).then(this.getData());
-
-      _this.fileUpload(_this.state.file).then(function (res) {
-        _this.addPhoto(res.data);
-
-        _this.setState({
-          loading: false
-        }); // this.insertImage(res.data);
-
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "dropChange", function (file) {
-      // console.log(file);
-      _this.setState({
-        file: file
-      });
-    });
-
-    _this.state = {
-      photos: [],
-      file: null,
-      currentPage: 1,
-      setPerPage: 10,
-      loading: false
-    };
-    return _this;
-  }
-
-  _createClass(PhotoInsert, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.getData();
-    }
-  }, {
-    key: "render",
-    // showList = () => {
-    //   document.querySelector('.photo-upload').style.display = 'none';
-    //   document.querySelector('.photo-list').style.display = 'block';
-    // }
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "photo-upload"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Dropzone__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        dropChange: this.dropChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary keep-modal",
-        onClick: this.postData
-      }, "\u753B\u50CF\u3092\u30A2\u30C3\u30D7\u30ED\u30FC\u30C9"), this.state.loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-warning loading",
-        type: "button",
-        disabled: true
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "spinner-grow spinner-grow-sm",
-        role: "status",
-        "aria-hidden": "true"
-      }), "Loading...")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_PhotoList__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        photos: this.state.photos
-      }));
-    } //render
-
-  }]);
-
-  return PhotoInsert;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (PhotoInsert);
-
-/***/ }),
-
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_bling_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/bling.js */ "./resources/js/components/bling.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _PhotoInsert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PhotoInsert */ "./resources/js/PhotoInsert.js");
-
-
-
-
-
-if (document.getElementById('photo_insert')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_PhotoInsert__WEBPACK_IMPORTED_MODULE_3__["default"], null), document.getElementById('photo_insert'));
-}
-
-(function ($, $$) {
-  $('.navbar-toggler').on('click', function () {
-    $('#navbarToggle').classList.toggle('collapse');
-  });
-
-  var multi_form_control = function multi_form_control() {
-    // 2番目以降のフォームを隠す（１個だけ表示する）
-    var hideOthers = function hideOthers(elem) {
-      var el = document.getElementsByClassName(elem);
-
-      for (var i = 1; i < el.length; i++) {
-        el[i].classList.add('hide');
-        el[0].classList.add('mt-0');
-      }
-    }; // hideOthers
-
-
-    hideOthers('link-form'); //Post新規投稿ページ
-
-    hideOthers('multiField'); //Photo Upload Page
-    // クリックで１個ずつフォームの表示・非表示
-
-    var toggleForms = function toggleForms(elem) {
-      var el = document.getElementsByClassName(elem);
-      var i = 1;
-
-      if ($('#add-form')) {
-        $('#add-form').on('click', function (e) {
-          e.preventDefault();
-          el[i].classList.remove('hide');
-          i++;
-        });
-      }
-
-      if ($('#remove-form')) {
-        $('#remove-form').on('click', function (e) {
-          i > 1 ? i-- : i;
-          e.preventDefault();
-          el[i].classList.add('hide');
-        });
-      }
-    }; // toggleForms
-
-
-    toggleForms('link-form'); //Post新規投稿ページ
-
-    toggleForms('multiField'); //Photo Upload Page
-    // Post更新ページにて既にデータが入ってるフォームのみ表示
-
-    var linkForms = document.querySelectorAll('.link-form-edit .urlinput');
-    linkForms.forEach(function (form) {
-      // console.log(form.value);
-      if (form.value == "" || form.value == null) {
-        // console.log('hello');
-        form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable');
-      }
-    }); // 空のフォームは表示・非表示をコントロールできるように
-
-    toggleForms('togglable');
-  }; //multi_form_control
-
-
-  multi_form_control();
-
-  var modal_control = function modal_control() {
-    var modal = $('.modal'); // let photos = $$('#photos img');
-    // // transfered to Photo.js(React Component)
-    // function insertImage() {
-    //   let image = '<a href="' + this.dataset.origin + '"><img src="' + this.dataset.medium + '"></a>';
-    //   let image = `<a href="${this.dataset.origin}"><img src="${this.dataset.medium}"></a>`;
-    //   $('#id_content').value += image;
-    // }
-
-    function expandModal() {
-      modal.classList.add('show-modal');
-    }
-
-    function closeModal(e) {
-      // console.log(e.target);
-      // let a = e.target
-      // let parents = [];
-      // while (a) {
-      //     parents.unshift(a);
-      //     a = a.parentNode;
-      //  }
-      //  console.log(parents);
-      if (!e.target.classList.contains('keep-modal')) {
-        modal.classList.remove('show-modal');
-      }
-    } // photos.forEach( photo => photo.on('click', insertImage));
-
-
-    if ($('#expand-modal')) {
-      $('#expand-modal').on('click', expandModal);
-    }
-
-    modal.on('click', closeModal);
-  }; // modal_control
-
-
-  if ($('.modal')) {
-    modal_control();
-  } // // Without bing.js
-  // let modal = document.querySelector('.modal');
-  // let photos = document.querySelectorAll('#photos img');
-  // function insertImage() {
-  //   let image = '<a href="' + this.dataset.origin + '"><img src="' + this.dataset.medium + '"></a>';
-  //   document.querySelector('#id_content').value += image;
-  // }
-  // function expandModal() {
-  //   modal.classList.add('show');
-  // }
-  // function closeModal(e) {
-  //   // console.log(e);
-  //   // if(e.target==='form') return;
-  //   modal.classList.remove('show');
-  // }
-  // photos.forEach( photo => photo.addEventListener('click', insertImage));
-  // document.querySelector('#expand-modal').addEventListener('click', expandModal);
-  // modal.addEventListener('click', closeModal);
-
-})(_components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$"], _components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$$"]);
-
-/***/ }),
-
-/***/ "./resources/js/components/Dropzone.js":
-/*!*********************************************!*\
-  !*** ./resources/js/components/Dropzone.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dropzone */ "./node_modules/react-dropzone/dist/es/index.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var MyDropzone =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(MyDropzone, _Component);
-
-  function MyDropzone() {
-    var _this;
-
-    _classCallCheck(this, MyDropzone);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MyDropzone).call(this));
-
-    _this.onDrop = function (files) {
-      // this.setState({files})
-      _this.setState({
-        description: files[0].name
-      });
-
-      _this.props.dropChange(files[0]);
-    };
-
-    _this.state = {
-      // files: [],
-      description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
-    };
-    return _this;
-  }
-
-  _createClass(MyDropzone, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      // const files = this.state.files.map(file => (
-      //   <li key={file.name}>
-      //     {file.name} - {file.size} bytes
-      //   </li>
-      // ));
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_dropzone__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        onDrop: this.onDrop
-      }, function (_ref) {
-        var getRootProps = _ref.getRootProps,
-            getInputProps = _ref.getInputProps;
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-          className: "dropzone-container"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", getRootProps({
-          className: 'dropzone keep-modal'
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", _extends({}, getInputProps(), {
-          type: "file",
-          className: "keep-modal"
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
-          className: "keep-modal"
-        }, _this2.state.description)));
-      });
-    }
-  }]);
-
-  return MyDropzone;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (MyDropzone); // import React from 'react';
-// import {useDropzone} from 'react-dropzone';
-// function MyDropzone(props) {
-//   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
-//     onDrop:  acceptedFiles => {
-//       document.querySelector('.dropzone p').innerHTML({files})
-//       props.dropChange(acceptedFiles[0])
-//     }
-//   });
-//   const files = acceptedFiles.map(file => (
-//     <li key={file.path}>
-//       {file.path} - {file.size} bytes
-//     </li>
-//   ));
-//   return (
-//     <section className="dropzone-container">
-//       <div {...getRootProps({className: 'dropzone keep-modal'})}>
-//         <input {...getInputProps()} className="keep-modal"/>
-//         <p className="keep-modal">画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。</p>
-//       </div>
-//       <aside>
-//         <ul>{files}</ul>
-//       </aside>
-//     </section>
-//   );
-// }
-// export default MyDropzone;
-
-/***/ }),
-
-/***/ "./resources/js/components/Pagination.js":
-/*!***********************************************!*\
-  !*** ./resources/js/components/Pagination.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var Pagination = function Pagination(_ref) {
-  var currentPage = _ref.currentPage,
-      lastPage = _ref.lastPage,
-      paginate = _ref.paginate,
-      toPreviousPage = _ref.toPreviousPage,
-      toNextPage = _ref.toNextPage;
-  var pageNumbers = [];
-
-  for (var i = 1; i <= lastPage; i++) {
-    pageNumbers.push(i);
-  }
-
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "pagination"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: 'page-item ' + (currentPage === 1 ? 'disabled' : '')
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: toPreviousPage,
-    className: "page-link keep-modal"
-  }, "Previous")), pageNumbers.map(function (number) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: number,
-      className: 'page-item ' + (number === currentPage ? 'active' : '')
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick() {
-        return paginate(number);
-      },
-      className: "page-link keep-modal mobile-off"
-    }, number));
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: 'page-item ' + (currentPage === lastPage ? 'disabled' : '')
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: toNextPage,
-    href: "!#",
-    className: "page-link keep-modal"
-  }, "Next"))));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Pagination);
-
-/***/ }),
-
-/***/ "./resources/js/components/PhotoList.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/PhotoList.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination */ "./resources/js/components/Pagination.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-var PhotoList = function PhotoList(props) {
-  // const [loading, setLoading] = useState(false);
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
-      _useState2 = _slicedToArray(_useState, 2),
-      currentPage = _useState2[0],
-      setCurrentPage = _useState2[1];
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(8),
-      _useState4 = _slicedToArray(_useState3, 1),
-      photosPerPage = _useState4[0];
-
-  var insertImageFromList = function insertImageFromList(e) {
-    // console.log(e.target.dataset.medium)
-    var image = "<a href=\"".concat(e.target.dataset.origin, "\"><img src=\"").concat(e.target.dataset.medium, "\"></a>");
-    document.querySelector('#id_content').value += image;
-  };
-
-  var hideList = function hideList() {
-    document.querySelector('.photo-upload').style.display = 'block';
-    document.querySelector('.photo-list').style.display = 'none';
-  };
-
-  var indexOfLastPhoto = currentPage * photosPerPage;
-  var indexOfFirstPhoto = indexOfLastPhoto - photosPerPage;
-  var currentPhotos = props.photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
-  var lastPage = Math.ceil(props.photos.length / photosPerPage); // Change page
-
-  var paginate = function paginate(pageNumber) {
-    return setCurrentPage(pageNumber);
-  };
-
-  var toPreviousPage = function toPreviousPage() {
-    return setCurrentPage(currentPage - 1);
-  };
-
-  var toNextPage = function toNextPage() {
-    return setCurrentPage(currentPage + 1);
-  }; // render() {
-
-
-  var elements = currentPhotos.map(function (photo, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: photo.id
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      className: "thumb",
-      onClick: insertImageFromList,
-      src: photo.thumbnail,
-      "data-medium": photo.medium,
-      "data-origin": photo.origin
-    }));
-  });
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "photo-list"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u753B\u50CF\u3092\u633F\u5165")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, elements), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pagination__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    currentPage: currentPage,
-    lastPage: lastPage,
-    paginate: paginate,
-    toPreviousPage: toPreviousPage,
-    toNextPage: toNextPage
-  }));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (PhotoList);
-
-/***/ }),
-
-/***/ "./resources/js/components/bling.js":
-/*!******************************************!*\
-  !*** ./resources/js/components/bling.js ***!
-  \******************************************/
-/*! exports provided: $, $$ */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "$", function() { return $; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "$$", function() { return $$; });
-// based on https://gist.github.com/paulirish/12fb951a8b893a454b32
-var $ = document.querySelector.bind(document);
-var $$ = document.querySelectorAll.bind(document);
-
-Node.prototype.on = window.on = function (name, fn) {
-  this.addEventListener(name, fn);
-};
-
-NodeList.prototype.__proto__ = Array.prototype; // eslint-disable-line
-
-NodeList.prototype.on = NodeList.prototype.addEventListener = function (name, fn) {
-  this.forEach(function (elem) {
-    elem.on(name, fn);
-  });
-};
-
-
-
-/***/ }),
-
-/***/ "./resources/sass/main.scss":
-/*!**********************************!*\
-  !*** ./resources/sass/main.scss ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!**************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/main.scss ***!
-  \**************************************************************/
+/*!********************************************************************************************!*\
+  !*** multi ./django_project/resources/js/app.js ./django_project/resources/sass/main.scss ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/c/Users/UncleKo/Desktop/dj-first/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /mnt/c/Users/UncleKo/Desktop/dj-first/resources/sass/main.scss */"./resources/sass/main.scss");
+__webpack_require__(/*! /mnt/c/Users/UncleKo/Desktop/dj-first/django_project/resources/js/app.js */"./django_project/resources/js/app.js");
+module.exports = __webpack_require__(/*! /mnt/c/Users/UncleKo/Desktop/dj-first/django_project/resources/sass/main.scss */"./django_project/resources/sass/main.scss");
 
 
 /***/ })

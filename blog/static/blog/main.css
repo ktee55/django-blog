@@ -204,13 +204,19 @@ div.content-section {
   position: relative;
 }
 
-div.content-section #expand-modal {
+div.content-section.post-create #expand-modal {
   position: absolute;
   top: 222px;
   right: 20px;
 }
 
-div.content-section section.modal.show-modal {
+div.content-section.post-edit #expand-modal {
+  position: absolute;
+  top: 270px;
+  right: 20px;
+}
+
+div.content-section .modal.show-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -225,33 +231,32 @@ div.content-section section.modal.show-modal {
   align-items: center;
 }
 
-div.content-section section.modal.show-modal #photo_insert {
+div.content-section .modal.show-modal .wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-div.content-section section.modal.show-modal #photo_insert div.photo-list {
+div.content-section .modal.show-modal .wrapper div.photo-list {
   margin-top: 40px;
 }
 
-div.content-section section.modal.show-modal #photo_insert div.photo-list div {
+div.content-section .modal.show-modal .wrapper div.photo-list div {
   display: flex;
   justify-content: space-between;
 }
 
-div.content-section section.modal.show-modal #photo_insert div.photo-list ul {
+div.content-section .modal.show-modal .wrapper div.photo-list ul {
   display: flex;
   flex-wrap: wrap;
   margin: 10px 0;
   padding: 0;
 }
 
-div.content-section section.modal.show-modal #photo_insert div.photo-list ul li {
+div.content-section .modal.show-modal .wrapper div.photo-list ul li {
   list-style: none;
 }
 
-div.content-section section.modal.show-modal #photo_insert div.photo-list ul li img {
+div.content-section .modal.show-modal .wrapper div.photo-list ul li img {
   cursor: pointer;
   margin: 10px 10px 10px 0;
 }

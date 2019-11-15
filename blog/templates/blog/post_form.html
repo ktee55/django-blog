@@ -1,7 +1,11 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <div class="content-section">
+  {% if edit %}
+  <div class="content-section post-edit">
+  {% else %}
+  <div class="content-section post-create">
+  {% endif %}
     <a id="expand-modal" class="btn btn-outline-info btn-sm mt-1 mb-1">画像を挿入</a>
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
@@ -54,9 +58,7 @@
         <button class="btn btn-outline-info" type="submit">カテゴリーを追加</button>
       </fieldset>
     </form> {% endcomment %}
-    <section class="modal">
-      <div id="photo_insert">
+      <div class="photo_insert">
       </div> <!-- #photos -->
-    </section> <!-- .modal -->
   </div> <!-- content-section -->
 {% endblock content %}
