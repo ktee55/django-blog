@@ -1,10 +1,10 @@
 import {$, $$} from './components/bling.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PhotoInsert from './PhotoInsert';
+import PhotoModal from './PhotoModal';
 
 if (document.querySelector('.photo_insert')) {
-  ReactDOM.render(<PhotoInsert />, document.querySelector('.photo_insert'));
+  ReactDOM.render(<PhotoModal />, document.querySelector('.photo_insert'));
 }
 
 (function ($, $$) {
@@ -67,32 +67,32 @@ if (document.querySelector('.photo_insert')) {
 
   multi_form_control()
 
-  const modal_control = () => {
+  // const modal_control = () => {
     
-    let modal = $('.modal');
+  //   let modal = $('.modal');
 
-    function expandModal() {
-      modal.classList.add('show-modal');
-    }
+  //   function expandModal() {
+  //     modal.classList.add('show-modal');
+  //   }
 
-    function closeModal(e) {
-      if(!e.target.classList.contains('keep-modal')) {
-        modal.classList.remove('show-modal');
-      }
-    }
+  //   function closeModal(e) {
+  //     if(!e.target.classList.contains('keep-modal')) {
+  //       modal.classList.remove('show-modal');
+  //     }
+  //   }
 
-    if($('#expand-modal')) {
-      $('#expand-modal').on('click', expandModal);
-    }
+  //   if($('#expand-modal')) {
+  //     $('#expand-modal').on('click', expandModal);
+  //   }
 
-    modal.on('click', closeModal);
+  //   modal.on('click', closeModal);
 
 
-  } // modal_control
+  // } // modal_control
 
-  if($('.modal')) {
-    modal_control();
-  }
+  // if($('.modal')) {
+  //   modal_control();
+  // }
 
 
   // // Without bing.js

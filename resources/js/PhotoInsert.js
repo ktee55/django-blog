@@ -30,6 +30,7 @@ class PhotoInsert extends React.Component {
 
   componentDidMount() {
     this.getData();
+    document.querySelector('.modal').addEventListener('click', this.props.closeModal)
   }
 
   addPhoto = (newPhoto) => {
@@ -39,11 +40,10 @@ class PhotoInsert extends React.Component {
     }));
   }
 
-  insertImage = (data) => {
-    // console.log(e.target.dataset.medium)
-    let image = `<a href="${data.origin}"><img src="${data.medium}"></a>`;
-    document.querySelector('#id_content').value += image;
-  }
+  // insertImage = (data) => {
+  //   // console.log(e.target.dataset.medium)
+  //   let image = `<a href="${data.origin}" target="_blank"><img src="${data.medium}"></a>`;
+  // }
 
   fileUpload = (file) => {
     const url = '/api/photos/';
@@ -89,28 +89,33 @@ class PhotoInsert extends React.Component {
 
   render() {
     return (
-      <div className="modal">
-        <div className="wrapper">
-          <div className="photo-upload">
-            <Dropzone dropChange={this.dropChange} />
-            <button className="btn btn-primary keep-modal" onClick={this.postData}>画像をアップロード</button>
-            {/* <button className="btn btn-outline-info keep-modal" onClick={this.showList}>アルバムから選択して挿入</button> */}
-            {this.state.loading && 
-            <button className="btn btn-warning loading" type="button" disabled>
-              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-              Loading...
-            </button>
-            }
-          </div>
-          <PhotoList photos={this.state.photos}/>
-          {/* <input type="file" className="keep-modal" onChange={this.onChange} />
-          <button className="btn btn-primary keep-modal" onClick={this.postData}>アップロード</button> */}
-          {/* <form method="POST" action="http://127.0.0.1:8000/api/photos/" onSubmit={this.postData}>
-            <input type="file" className="keep-modal" onChange={this.onChange} />
-            <button className="btn btn-primary keep-modal" type="submit">アップロード</button>
-          </form> */}
-        </div>
-    </div>
+        <div className="modal">
+          <div className="wrapper">
+            <div className="photo-upload">
+              <Dropzone dropChange={this.dropChange} />
+              <button className="btn btn-primary keep-modal" onClick={this.postData}>画像をアップロード</button>
+              {/* <button className="btn btn-outline-info keep-modal" onClick={this.showList}>アルバムから選択して挿入</button> */}
+              {this.state.loading && 
+              <button className="btn btn-warning loading" type="button" disabled>
+                <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
+              }
+            </div>
+            <PhotoList 
+              photos={this.state.photos}
+              shutdownModal={this.props.shutdownModal}
+              isTop={this.props.isTop}
+            />
+            {/* <input type="file" className="keep-modal" onChange={this.onChange} />
+            <button className="btn btn-primary keep-modal" onClick={this.postData}>アップロード</button> */}
+            {/* <form method="POST" action="http://127.0.0.1:8000/api/photos/" onSubmit={this.postData}>
+              <input type="file" className="keep-modal" onChange={this.onChange} />
+              <button className="btn btn-primary keep-modal" type="submit">アップロード</button>
+            </form> */}
+
+          </div> {/* wrapper */}
+        </div> 
     )
   } //render
 

@@ -165,12 +165,6 @@ function (_React$Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "insertImage", function (data) {
-      // console.log(e.target.dataset.medium)
-      var image = "<a href=\"".concat(data.origin, "\"><img src=\"").concat(data.medium, "\"></a>");
-      document.querySelector('#id_content').value += image;
-    });
-
     _defineProperty(_assertThisInitialized(_this), "fileUpload", function (file) {
       var url = '/api/photos/';
       var formData = new FormData();
@@ -222,6 +216,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.getData();
+      document.querySelector('.modal').addEventListener('click', this.props.closeModal);
     }
   }, {
     key: "render",
@@ -250,8 +245,10 @@ function (_React$Component) {
         role: "status",
         "aria-hidden": "true"
       }), "Loading...")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_PhotoList__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        photos: this.state.photos
-      })));
+        photos: this.state.photos,
+        shutdownModal: this.props.shutdownModal,
+        isTop: this.props.isTop
+      })), " ");
     } //render
 
   }]);
@@ -260,6 +257,114 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (PhotoInsert);
+
+/***/ }),
+
+/***/ "./django_project/resources/js/PhotoModal.js":
+/*!***************************************************!*\
+  !*** ./django_project/resources/js/PhotoModal.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _PhotoInsert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PhotoInsert */ "./django_project/resources/js/PhotoInsert.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var PhotoModal =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(PhotoModal, _React$Component);
+
+  function PhotoModal(props) {
+    var _this;
+
+    _classCallCheck(this, PhotoModal);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PhotoModal).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "showModalA", function () {
+      _this.setState({
+        isTop: true,
+        isShow: true
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showModalB", function () {
+      _this.setState({
+        isTop: false,
+        isShow: true
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "closeModal", function (e) {
+      if (!e.target.classList.contains('keep-modal')) {
+        _this.setState({
+          isShow: false
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "shutdownModal", function () {
+      _this.setState({
+        isShow: false
+      });
+    });
+
+    _this.state = {
+      isShow: false,
+      isTop: false
+    };
+    return _this;
+  }
+
+  _createClass(PhotoModal, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        id: "insert-top-image",
+        className: "btn btn-outline-info btn-sm mt-1 mb-1",
+        onClick: this.showModalA
+      }, "\u30C8\u30C3\u30D7\u753B\u50CF\u3092\u633F\u5165"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        id: "insert-image-into-content",
+        className: "btn btn-outline-info btn-sm mt-1 mb-1",
+        onClick: this.showModalB
+      }, "\u6295\u7A3F\u306B\u753B\u50CF\u3092\u633F\u5165"), this.state.isShow && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PhotoInsert__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        closeModal: this.closeModal,
+        shutdownModal: this.shutdownModal,
+        isTop: this.state.isTop
+      }));
+    }
+  }]);
+
+  return PhotoModal;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (PhotoModal);
 
 /***/ }),
 
@@ -277,14 +382,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _PhotoInsert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PhotoInsert */ "./django_project/resources/js/PhotoInsert.js");
+/* harmony import */ var _PhotoModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PhotoModal */ "./django_project/resources/js/PhotoModal.js");
 
 
 
 
 
 if (document.querySelector('.photo_insert')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_PhotoInsert__WEBPACK_IMPORTED_MODULE_3__["default"], null), document.querySelector('.photo_insert'));
+  react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_PhotoModal__WEBPACK_IMPORTED_MODULE_3__["default"], null), document.querySelector('.photo_insert'));
 }
 
 (function ($, $$) {
@@ -349,32 +454,25 @@ if (document.querySelector('.photo_insert')) {
   }; //multi_form_control
 
 
-  multi_form_control();
-
-  var modal_control = function modal_control() {
-    var modal = $('.modal');
-
-    function expandModal() {
-      modal.classList.add('show-modal');
-    }
-
-    function closeModal(e) {
-      if (!e.target.classList.contains('keep-modal')) {
-        modal.classList.remove('show-modal');
-      }
-    }
-
-    if ($('#expand-modal')) {
-      $('#expand-modal').on('click', expandModal);
-    }
-
-    modal.on('click', closeModal);
-  }; // modal_control
-
-
-  if ($('.modal')) {
-    modal_control();
-  } // // Without bing.js
+  multi_form_control(); // const modal_control = () => {
+  //   let modal = $('.modal');
+  //   function expandModal() {
+  //     modal.classList.add('show-modal');
+  //   }
+  //   function closeModal(e) {
+  //     if(!e.target.classList.contains('keep-modal')) {
+  //       modal.classList.remove('show-modal');
+  //     }
+  //   }
+  //   if($('#expand-modal')) {
+  //     $('#expand-modal').on('click', expandModal);
+  //   }
+  //   modal.on('click', closeModal);
+  // } // modal_control
+  // if($('.modal')) {
+  //   modal_control();
+  // }
+  // // Without bing.js
   // let modal = document.querySelector('.modal');
   // let photos = document.querySelectorAll('#photos img');
   // function insertImage() {
@@ -392,7 +490,6 @@ if (document.querySelector('.photo_insert')) {
   // photos.forEach( photo => photo.addEventListener('click', insertImage));
   // document.querySelector('#expand-modal').addEventListener('click', expandModal);
   // modal.addEventListener('click', closeModal);
-
 })(_components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$"], _components_bling_js__WEBPACK_IMPORTED_MODULE_0__["$$"]);
 
 /***/ }),
@@ -614,7 +711,14 @@ var PhotoList = function PhotoList(props) {
   var insertImageFromList = function insertImageFromList(e) {
     // console.log(e.target.dataset.medium)
     var image = "<a href=\"".concat(e.target.dataset.origin, "\"><img src=\"").concat(e.target.dataset.medium, "\"></a>");
-    document.querySelector('#id_content').value += image;
+
+    if (props.isTop) {
+      document.querySelector('#id_featured_image').value = e.target.dataset.medium;
+    } else {
+      document.querySelector('#id_content').value += image;
+    }
+
+    props.shutdownModal();
   };
 
   var hideList = function hideList() {
@@ -644,11 +748,12 @@ var PhotoList = function PhotoList(props) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: photo.id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      className: "thumb",
+      className: "thumb keep-modal",
       onClick: insertImageFromList,
       src: photo.thumbnail,
       "data-medium": photo.medium,
-      "data-origin": photo.origin
+      "data-origin": photo.origin,
+      "data-raw": photo
     }));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

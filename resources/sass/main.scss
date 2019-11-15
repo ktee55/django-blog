@@ -225,17 +225,17 @@ ul {
 
 div.content-section {
   position: relative;
-  &.post-create #expand-modal {
+  #insert-image-into-content {
     position: absolute;
     top: 222px;
     right: 20px;
   }
-  &.post-edit #expand-modal {
+  #insert-top-image {
     position: absolute;
-    top: 270px;
+    top: 141px;
     right: 20px;
   }
-  .modal.show-modal {
+  .modal {
       position: fixed;
       top: 0;
       left: 0;
