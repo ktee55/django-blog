@@ -40,17 +40,17 @@ class Photo(models.Model):
                       options={'quality': 80}
                       )
 
-  # small = ImageSpecField(source='origin',
-  #                         processors=[ResizeToFill(250,250)],
-  #                         format="JPEG",
-  #                         options={'quality': 80}
-  #                         )
+  small = ImageSpecField(source='origin',
+                          processors=[ResizeToFill(250,250)],
+                          format="JPEG",
+                          options={'quality': 80}
+                          )
 
-  # thumbnail= ImageSpecField(source='origin',
-  #                         processors=[ResizeToFill(75,75)],
-  #                         format="JPEG",
-  #                         options={'quality': 80}
-  #                         )
+  thumbnail= ImageSpecField(source='origin',
+                          processors=[ResizeToFill(75,75)],
+                          format="JPEG",
+                          options={'quality': 80}
+                          )
 
   date_posted = models.DateTimeField(default=timezone.now)
 
