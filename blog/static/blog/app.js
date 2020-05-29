@@ -189,22 +189,27 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "postData", function (e) {
-      e.preventDefault(); // this.fileUpload(this.state.file).then(this.getData());
+      e.preventDefault();
 
-      _this.fileUpload(_this.state.file).then(function (res) {
-        _this.addPhoto(res.data);
+      if (_this.state.file) {
+        // this.fileUpload(this.state.file).then(this.getData());
+        _this.fileUpload(_this.state.file).then(function (res) {
+          _this.addPhoto(res.data);
 
-        _this.setState({
-          loading: false
-        }); // this.insertImage(res.data);
+          _this.setState({
+            loading: false,
+            description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
+          }); // this.insertImage(res.data);
 
-      });
+        });
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "dropChange", function (file) {
       // console.log(file);
       _this.setState({
-        file: file
+        file: file,
+        description: file.name
       });
     });
 
@@ -213,7 +218,8 @@ function (_React$Component) {
       file: null,
       currentPage: 1,
       setPerPage: 10,
-      loading: false
+      loading: false,
+      description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
     };
     return _this;
   }
@@ -237,7 +243,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "photo-upload"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Dropzone__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        dropChange: this.dropChange
+        dropChange: this.dropChange,
+        description: this.state.description
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-primary keep-modal",
         onClick: this.postData
@@ -446,17 +453,14 @@ function (_Component) {
 
     _this.onDrop = function (files) {
       // this.setState({files})
-      _this.setState({
-        description: files[0].name
-      });
-
+      // this.setState({ description: files[0].name})
       _this.props.dropChange(files[0]);
-    };
+    }; // this.state = {
+    //   // files: [],
+    //   description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
+    // };
 
-    _this.state = {
-      // files: [],
-      description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
-    };
+
     return _this;
   }
 
@@ -484,7 +488,7 @@ function (_Component) {
           className: "keep-modal"
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
           className: "keep-modal"
-        }, _this2.state.description)));
+        }, _this2.props.description)));
       });
     }
   }]);

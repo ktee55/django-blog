@@ -60,12 +60,11 @@ a.article-title:hover {
 }
 
 .article-content img {
-  width: 100%;
-  max-width: 600px;
+  max-width: 100%;
 }
 
 .featured_image {
-  width: 100%;
+  max-width: 100%;
 }
 
 .article-img {
@@ -212,7 +211,7 @@ div.content-section.post-create #expand-modal {
 
 div.content-section.post-edit #expand-modal {
   position: absolute;
-  top: 270px;
+  top: 269px;
   right: 20px;
 }
 
@@ -373,5 +372,9 @@ ul.image-list li img {
 
 .comment-head div p {
   margin-bottom: 0;
+}
+
+.post-edit .custom-file-label {
+  top: 28px;
 }
 

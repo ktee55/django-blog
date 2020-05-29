@@ -7,13 +7,13 @@ class MyDropzone extends Component {
     super();
     this.onDrop = (files) => {
       // this.setState({files})
-      this.setState({ description: files[0].name})
+      // this.setState({ description: files[0].name})
       this.props.dropChange(files[0])
     };
-    this.state = {
-      // files: [],
-      description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
-    };
+    // this.state = {
+    //   // files: [],
+    //   description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
+    // };
   }
   
   render() {
@@ -29,7 +29,7 @@ class MyDropzone extends Component {
         <section className="dropzone-container">
           <div {...getRootProps({className: 'dropzone keep-modal'})}>
             <input {...getInputProps()} type="file" className="keep-modal"/>
-            <small className="keep-modal">{this.state.description}</small>
+            <small className="keep-modal">{this.props.description}</small>
           </div>
           {/* <aside>
             <ul>{files}</ul>

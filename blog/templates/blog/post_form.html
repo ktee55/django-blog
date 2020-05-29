@@ -39,6 +39,7 @@
         </section>
 
       </fieldset>
+
       <div class="form-group">
       {% if edit %}
         <button class="btn btn-outline-info" type="submit"> 更新する </button>
@@ -48,17 +49,22 @@
         <button class="btn btn-outline-info" type="submit">投稿する</button>
         <a class="btn btn-outline-secondary" href=" {% url 'blog-home' %}">キャンセル</a>
       {% endif %}
-
       </div>
+
     </form>
-    {% comment %} <form method="POST" action="" class="post-form">
+
+    {% comment %} 
+    <form method="POST" action="" class="post-form">
       {% csrf_token %}
       <fieldset class="form-group">
         {{ category_form|crispy }}
         <button class="btn btn-outline-info" type="submit">カテゴリーを追加</button>
       </fieldset>
-    </form> {% endcomment %}
-      <div class="photo_insert">
-      </div> <!-- #photos -->
+    </form> 
+    {% endcomment %}
+    
+    <div class="photo_insert">
+    </div> <!-- #photos -->
+
   </div> <!-- content-section -->
 {% endblock content %}

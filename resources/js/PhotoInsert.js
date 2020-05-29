@@ -13,7 +13,8 @@ class PhotoInsert extends React.Component {
       file: null,
       currentPage: 1,
       setPerPage: 10,
-      loading: false
+      loading: false,
+      description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
     }
   }
 
@@ -62,14 +63,17 @@ class PhotoInsert extends React.Component {
 
   postData = (e) => {
     e.preventDefault();
-    // this.fileUpload(this.state.file).then(this.getData());
-    this.fileUpload(this.state.file).then( res => {
-      this.addPhoto(res.data);
-      this.setState({
-        loading: false
+    if(this.state.file){
+      // this.fileUpload(this.state.file).then(this.getData());
+      this.fileUpload(this.state.file).then( res => {
+        this.addPhoto(res.data);
+        this.setState({
+          loading: false,
+          description: "画像ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選んで下さい。"
+        });
+        // this.insertImage(res.data);
       });
-      // this.insertImage(res.data);
-    });
+    }
   }
 
   // onChange = (e) => {
@@ -79,7 +83,10 @@ class PhotoInsert extends React.Component {
 
   dropChange = (file) => {
     // console.log(file);
-    this.setState({file: file})
+    this.setState({
+      file: file,
+      description: file.name
+    })
   }
 
   // showList = () => {
@@ -92,7 +99,7 @@ class PhotoInsert extends React.Component {
       <div className="modal">
         <div className="wrapper">
           <div className="photo-upload">
-            <Dropzone dropChange={this.dropChange} />
+            <Dropzone dropChange={this.dropChange} description={this.state.description}/>
             <button className="btn btn-primary keep-modal" onClick={this.postData}>画像をアップロード</button>
             {/* <button className="btn btn-outline-info keep-modal" onClick={this.showList}>アルバムから選択して挿入</button> */}
             {this.state.loading && 
