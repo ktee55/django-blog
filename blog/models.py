@@ -31,7 +31,7 @@ class Category(models.Model):
 
 class Post(models.Model):
   title = models.CharField(max_length=100, verbose_name="タイトル")
-  featured_image = models.ImageField(blank=True, upload_to='featured_image', verbose_name="メイン画像(option)")
+  featured_image = models.ImageField(blank=True, upload_to='featured_image/%y/%m/', verbose_name="メイン画像(option)")
   content = models.TextField(verbose_name="内容")
   # date_posted = models.DateTimeField(auto_now=True) #常に日付更新
   # date_posted = models.DateTimeField(auto_now_add=True) #作成時のみ更新。更新時日付更新されない。
