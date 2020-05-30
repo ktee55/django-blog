@@ -12,6 +12,7 @@ from .models import Post, Comment, Category, Tag
 # from photos.models import Photo
 from .forms import CommentForm, PostCreateForm, URLFormset
 # from photos.forms import UploadFileForm
+from .boost import DynamicRedirectMixin
 
 
 class PostListView(ListView):
@@ -218,6 +219,32 @@ def archives(request):
         'year': year
     }
     return render(request, 'blog/post_list.html', context)
+
+
+class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixin, CreateView): 
+  model=Category
+  fields = ['name']
+  # success_url = reverse_lazy('category-create')
+
+  #ユーザーがスタッフの時にのみ許可
+  def test_func(self):
+    if self.request.user.is_staff:
+        return True
+    return False
+
+
+class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixin, CreateView): 
+  model=Tag
+  fields = ['name']
+  # success_url = reverse_lazy('category-create')
+
+  #ユーザーがスタッフの時にのみ許可
+  def test_func(self):
+    if self.request.user.is_staff:
+        return True
+    return False
+
+
 
 
 def about(request):

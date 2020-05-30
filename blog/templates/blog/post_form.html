@@ -53,6 +53,10 @@
 
     </form>
 
+
+    <a class="nav-item nav-link" href="{% url 'category-create' %}?next={{request.path}}">カテゴリーを追加</a>
+    <a class="nav-item nav-link" href="{% url 'tag-create' %}?next={{request.path}}">タグを追加</a>
+
     {% comment %} 
     <form method="POST" action="" class="post-form">
       {% csrf_token %}

@@ -4,9 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy
 
-from .models import Photo
+from .models import Photo, Category, Tag
 # from .forms import UploadFileForm
 from .forms import UploadMultipleFormSet
+from blog.boost import DynamicRedirectMixin
 
 class PhotoListView(ListView):
     model = Photo
@@ -115,5 +116,29 @@ class PhotoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
   def test_func(self):
     photo = self.get_object()
     if self.request.user == photo.author:
+        return True
+    return False
+
+
+class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixin, CreateView): 
+  model=Category
+  fields = ['name']
+  # success_url = reverse_lazy('category-create')
+
+  #ユーザーがスタッフの時にのみ許可
+  def test_func(self):
+    if self.request.user.is_staff:
+        return True
+    return False
+
+
+class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixin, CreateView): 
+  model=Tag
+  fields = ['name']
+  # success_url = reverse_lazy('category-create')
+
+  #ユーザーがスタッフの時にのみ許可
+  def test_func(self):
+    if self.request.user.is_staff:
         return True
     return False

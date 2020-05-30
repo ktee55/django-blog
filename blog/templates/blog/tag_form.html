@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottm mb-4">タグを追加</legend>
+        {{ form|crispy }}
+        <button class="btn btn-outline-info" type="submit">タグを追加</button>
+      </fieldset>
+    </form>
+{% endblock %}
