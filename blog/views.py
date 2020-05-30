@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 from .models import Post, Comment, Category, Tag
 # from photos.models import Photo
@@ -23,7 +24,11 @@ class PostListView(ListView):
   paginate_by = 3
 
   def get_queryset(self):
-    return Post.objects.filter(draft=False).order_by('-date_posted')
+      if self.request.user.is_authenticated:
+        user = self.request.user
+        return Post.objects.filter( Q(draft=False) | Q(author=user) ).order_by('-date_posted')
+      else:
+        return Post.objects.filter(draft=False).order_by('-date_posted')
 
 class UserPostListView(ListView):
   model = Post
@@ -224,7 +229,7 @@ def archives(request):
 class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixin, CreateView): 
   model=Category
   fields = ['name']
-  # success_url = reverse_lazy('category-create')
+  success_url = reverse_lazy('category-create')
 
   #ユーザーがスタッフの時にのみ許可
   def test_func(self):
@@ -236,7 +241,7 @@ class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirec
 class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixin, CreateView): 
   model=Tag
   fields = ['name']
-  # success_url = reverse_lazy('category-create')
+  success_url = reverse_lazy('tag-create')
 
   #ユーザーがスタッフの時にのみ許可
   def test_func(self):

@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy
+from django.db.models import Q
 
 from .models import Photo, Category, Tag
 # from .forms import UploadFileForm
@@ -16,7 +17,11 @@ class PhotoListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-      return Photo.objects.filter(private=False).order_by('-id')
+      if self.request.user.is_authenticated:
+        user = self.request.user
+        return Photo.objects.filter( Q(private=False) | Q(author=user) ).order_by('-id')
+      else:
+        return Photo.objects.filter(private=False).order_by('-id')
 
 
 class PhotoDetailView(UserPassesTestMixin, DetailView):
