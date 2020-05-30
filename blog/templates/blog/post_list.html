@@ -18,7 +18,11 @@
               <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
               <small class="text-muted">{{ post.date_posted|date:"Y-m-j" }}</small>
             </div>
-            <h2><a class="article-title" href=" {% url 'post-detail' post.id %}">{{ post.title }}</a>
+            <h2>
+              <a class="article-title" href=" {% url 'post-detail' post.id %}">{{ post.title }}</a>
+              {% if post.draft %}
+              <small class="text-danger">（下書き）</small>
+              {% endif %}
             <!-- {% if post.draft %}
                <small class="text-danger">（下書き）</small>
             {% endif %} -->
@@ -56,8 +60,12 @@
     {% if page_obj.has_other_pages %}
 
       {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        <a class="btn btn-outline-info mb-4" href="?page=1">
+          <i class="fas fa-angle-double-left"></i>
+        </a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">
+          <i class="fas fa-angle-left"></i>
+        </a>
       {% endif %}
 
       {% for num in page_obj.paginator.page_range %}
@@ -69,8 +77,12 @@
       {% endfor %}
 
       {% if page_obj.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">
+          <i class="fas fa-angle-right"></i>
+        </a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">
+          <i class="fas fa-angle-double-right"></i>
+        </a>
       {% endif %}
 
     {% endif %}

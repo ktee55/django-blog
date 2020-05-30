@@ -18,6 +18,9 @@
                   <a class="btn btn-outline-secondary btn-sm mb-1" href="{% url 'photo-update' photo.id %}">編集する</a>
                   <a class="btn btn-outline-danger btn-sm mb-1" href="{% url 'photo-delete' photo.id %}">削除する</a>
                 {% endif %}
+                {% if photo.private %}
+                <small class="text-danger">（非公開）</small>
+                {% endif %}
         </li>
         {% endif %}
       {% endfor %}
@@ -28,8 +31,12 @@
     {% if page_obj.has_other_pages %}
 
       {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        <a class="btn btn-outline-info mb-4" href="?page=1">
+          <i class="fas fa-angle-double-left"></i>
+        </a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">
+          <i class="fas fa-angle-left"></i>
+        </a>
       {% endif %}
 
       {% for num in page_obj.paginator.page_range %}
@@ -41,8 +48,12 @@
       {% endfor %}
 
       {% if page_obj.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">
+          <i class="fas fa-angle-right"></i>
+        </a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">
+          <i class="fas fa-angle-double-right"></i>
+        </a>
       {% endif %}
 
     {% endif %}

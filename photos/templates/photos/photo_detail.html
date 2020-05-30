@@ -54,12 +54,16 @@
         {% if previous %}
           {% url 'photo-detail' previous.id %}
         {% endif %}
-      ">Prev</a>
+      ">
+        <i class="fas fa-angle-left"></i>
+      </a>
       <a class="btn btn-outline-info" href="
         {% if next %}
           {% url 'photo-detail' next.id %}
         {% endif %}
-      ">Next</a>
+      ">
+        <i class="fas fa-angle-right"></i>
+      </a>
     </div>
     <a class="btn btn-info" href="{% url 'photo-list' %}">Top</a>
   </div>
