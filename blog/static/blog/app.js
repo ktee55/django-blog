@@ -299,6 +299,13 @@ if (document.querySelector('.photo_insert')) {
     $('#navbarToggle').classList.toggle('collapse');
   });
 
+  if ($('#id_featured_image')) {
+    $('#id_featured_image').on('change', function () {
+      var filename = this.value.replace(/^.*[\\\/]/, '');
+      $('#label_for_featured_image').innerHTML = filename;
+    });
+  }
+
   var multi_form_control = function multi_form_control() {
     // 2番目以降のフォームを隠す（１個だけ表示する）
     var hideOthers = function hideOthers(elem) {
@@ -347,10 +354,11 @@ if (document.querySelector('.photo_insert')) {
     linkForms.forEach(function (form) {
       // console.log(form.value);
       if (form.value == "" || form.value == null) {
-        // console.log('hello');
         form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable');
       }
-    }); // 空のフォームは表示・非表示をコントロールできるように
+    }); // ひとつだけ空のフォームを表示
+
+    $$('.togglable')[0].classList.remove('hide'); // 空のフォームは表示・非表示をコントロールできるように
 
     toggleForms('togglable');
   }; //multi_form_control

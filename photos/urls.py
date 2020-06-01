@@ -8,6 +8,6 @@ urlpatterns = [
     # path('create/', PhotoCreateView.as_view(), name='photo-create'),
     path('<int:pk>/update/', PhotoUpdateView.as_view(), name='photo-update'),
     path('<int:pk>/delete', PhotoDeleteView.as_view(), name='photo-delete'),
-    path('category/create/', CategoryCreateView.as_view(), name='category-create'),
-    path('tag/create/', TagCreateView.as_view(), name='tag-create'),
+    path('category/create/', CategoryCreateView.as_view(), name='photo-category-create'),
+    path('tag/create/', TagCreateView.as_view(), name='photo-tag-create'),
 ]

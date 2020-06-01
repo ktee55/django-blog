@@ -23,7 +23,7 @@
         {% endif %}
     </form>
 
-    <a class="nav-item nav-link" href="{% url 'category-create' %}?next={{request.path}}">カテゴリーを追加</a>
-    <a class="nav-item nav-link" href="{% url 'tag-create' %}?next={{request.path}}">タグを追加</a>
+    <a class="nav-item nav-link" href="{% url 'photo-category-create' %}?next={{request.path}}">カテゴリーを追加</a>
+    <a class="nav-item nav-link" href="{% url 'photo-tag-create' %}?next={{request.path}}">タグを追加</a>
   </div>
 {% endblock content %}

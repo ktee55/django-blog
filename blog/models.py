@@ -39,7 +39,7 @@ class Post(models.Model):
 
   author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
   category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="posts", null=True, blank=True, verbose_name="カテゴリー(option)")
-  tags = models.ManyToManyField(Tag, blank=True, related_name="posts", verbose_name="タグ(option)")
+  tags = models.ManyToManyField(Tag, null=True, blank=True, related_name="posts", verbose_name="タグ(option)")
   draft = models.BooleanField(default=False, verbose_name="下書きにする")
 
   class Meta:

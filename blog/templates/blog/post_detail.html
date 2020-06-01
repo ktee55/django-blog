@@ -34,7 +34,7 @@
               </a>
               {% endif %}
 
-              <p class="article-content">{{ post.content | safe }}</p>
+              <div class="article-content">{{ post.content | safe | linebreaks }}</div>
 
               {% if post.links.count %}
               <div class="links">
@@ -113,7 +113,7 @@
                 </header> <!-- comment header -->
 
                 <main>
-                  <p>{{ comment }}</p>
+                  <p>{{ comment | safe | linebreaks }}</p>
 
                   {% if comment.url %}
                     <small>参照URL: </small>

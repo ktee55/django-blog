@@ -50,7 +50,7 @@ a.article-title:hover {
 }
 
 .article-content {
-  white-space: pre-line;
+  // white-space: pre-line;
   img {
     // width: 100%;
     // max-width: 600px;
@@ -163,6 +163,10 @@ small {
   display: none;
 }
 
+.inline-link {
+  display: inline;
+}
+
 .mobile-off {
   @media (max-width: 768px) {
     display: none;
@@ -224,17 +228,22 @@ ul {
   } //ul:first-child
 }
 
-div.content-section {
+div.content-section,  {
   position: relative;
+  div#container-for-expand-model {
+    position: relative;
+    height: 5px;
+    // margin-top: 30px;
+  }
   &.post-create #expand-modal {
     position: absolute;
-    top: 222px;
-    right: 20px;
+    top: 0;
+    right: 0;
   }
   &.post-edit #expand-modal {
     position: absolute;
-    top: 269px;
-    right: 20px;
+    top: 0;
+    right: 0;
   }
   .modal.show-modal {
       position: fixed;
@@ -392,5 +401,13 @@ ul.image-list {
 }
 
 .post-edit .custom-file-label {
-  top: 28px;
+  top: 22px;
+  left: 36px;
+}
+
+
+@media (max-width: 768px) {
+  #label_for_featured_image {
+    display: none;
+  }
 }
