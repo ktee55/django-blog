@@ -9,7 +9,7 @@ const PhotoList = (props) => {
 
   const insertImageFromList = (e) => {
     // console.log(e.target.dataset.medium)
-    let image = `<a href="${e.target.dataset.origin}"><img src="${e.target.dataset.medium}"></a>`;
+    let image = `<a href="${e.target.dataset.origin}" target="_blank"><img src="${e.target.dataset.medium}"></a>`;
     document.querySelector('#id_content').value += image;
   }
 

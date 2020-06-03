@@ -306,25 +306,24 @@ if (document.querySelector('.photo_insert')) {
     });
   }
 
-  var multi_form_control = function multi_form_control() {
-    // 2番目以降のフォームを隠す（１個だけ表示する）
+  var multiFormControl = function multiFormControl() {
+    // 画像アップロードフォームにて、2番目以降のフォームを隠す（１個だけ表示する）
     var hideOthers = function hideOthers(elem) {
-      var el = document.getElementsByClassName(elem);
+      var el = document.querySelectorAll(elem);
 
       for (var i = 1; i < el.length; i++) {
         el[i].classList.add('hide');
         el[0].classList.add('mt-0');
       }
     }; // hideOthers
+    // hideOthers('link-form'); //Post新規投稿ページ =>下記functionに統一=>
 
 
-    hideOthers('link-form'); //Post新規投稿ページ
-
-    hideOthers('multiField'); //Photo Upload Page
+    hideOthers('.photo-form .multiField'); //Photo Upload Page
     // クリックで１個ずつフォームの表示・非表示
 
     var toggleForms = function toggleForms(elem) {
-      var el = document.getElementsByClassName(elem);
+      var el = document.querySelectorAll(elem);
       var i = 1;
 
       if ($('#add-form')) {
@@ -343,30 +342,38 @@ if (document.querySelector('.photo_insert')) {
         });
       }
     }; // toggleForms
+    // toggleForms('link-form'); //Post新規投稿ページ =>下記functionに統一=>
 
 
-    toggleForms('link-form'); //Post新規投稿ページ
+    toggleForms('.photo-form .multiField'); //Photo Upload Page
+    // 既にデータが入ってるフォームのみ表示
 
-    toggleForms('multiField'); //Photo Upload Page
-    // Post更新ページにて既にデータが入ってるフォームのみ表示
+    var hideEmptyForms = function hideEmptyForms(elem) {
+      var linkForms = document.querySelectorAll(elem);
+      linkForms.forEach(function (form) {
+        // console.log(form.value);
+        if (form.value == "" || form.value == null) {
+          //空のフォームを非表示、表示/非表示をコントロール、"削除する"チェックボックスを非表示にする->SCSS
+          form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable', 'url-empty');
+        }
+      }); // PostにURLがひとつもない場合(新規投稿含む)、ひとつだけ空のフォームを表示
 
-    var linkForms = document.querySelectorAll('.link-form-edit .urlinput');
-    linkForms.forEach(function (form) {
-      // console.log(form.value);
-      if (form.value == "" || form.value == null) {
-        form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable');
+      var el = document.querySelectorAll('.no-urls .togglable')[0];
+
+      if (el) {
+        el.classList.remove('hide');
       }
-    }); // ひとつだけ空のフォームを表示
 
-    $$('.togglable')[0].classList.remove('hide'); // 空のフォームは表示・非表示をコントロールできるように
+      toggleForms('.togglable');
+    };
 
-    toggleForms('togglable');
+    hideEmptyForms('.link-form .urlinput');
   }; //multi_form_control
 
 
-  multi_form_control();
+  multiFormControl();
 
-  var modal_control = function modal_control() {
+  var modalControl = function modalControl() {
     var modal = $('.modal');
 
     function expandModal() {
@@ -388,7 +395,7 @@ if (document.querySelector('.photo_insert')) {
 
 
   if ($('.modal')) {
-    modal_control();
+    modalControl();
   } // // Without bing.js
   // let modal = document.querySelector('.modal');
   // let photos = document.querySelectorAll('#photos img');
@@ -625,7 +632,7 @@ var PhotoList = function PhotoList(props) {
 
   var insertImageFromList = function insertImageFromList(e) {
     // console.log(e.target.dataset.medium)
-    var image = "<a href=\"".concat(e.target.dataset.origin, "\"><img src=\"").concat(e.target.dataset.medium, "\"></a>");
+    var image = "<a href=\"".concat(e.target.dataset.origin, "\" target=\"_blank\"><img src=\"").concat(e.target.dataset.medium, "\"></a>");
     document.querySelector('#id_content').value += image;
   };
 

@@ -207,6 +207,9 @@ ul {
   li {
     list-style: none;
   }
+  &.list-disc li {
+    list-style: disc
+  }
 }
 
 #side-menu {
@@ -228,7 +231,7 @@ ul {
   } //ul:first-child
 }
 
-div.content-section,  {
+div.content-section  {
   position: relative;
   div#container-for-expand-model {
     position: relative;
@@ -354,12 +357,14 @@ ul.image-list {
   margin-top: 5rem;
 }
 
-.link-formset {
+.link-formset,
+.photo-form {
   small {
     font-size: .9rem;
   }
   margin-top: 3rem;
-  .far {
+  .fa-plus-square, 
+  .fa-minus-square {
     font-size: 2rem;
     cursor: pointer;
     color: #17a2b8;
@@ -400,7 +405,7 @@ ul.image-list {
   }
 }
 
-.post-edit .custom-file-label {
+.filled-field .custom-file-label {
   top: 22px;
   left: 36px;
 }
@@ -410,4 +415,8 @@ ul.image-list {
   #label_for_featured_image {
     display: none;
   }
+}
+
+.url-empty div[id$=DELETE] {
+  display: none;
 }

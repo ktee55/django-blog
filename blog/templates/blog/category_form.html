@@ -10,4 +10,12 @@
         <button class="btn btn-outline-info" type="submit">カテゴリーを追加</button>
       </fieldset>
     </form>
+
+    <small>List</small>
+    <ul class="list-disc">
+      {% for category in post_categories%}
+      <li>{{ category.name }}</li>
+      {% endfor %}
+    </ul>
+
 {% endblock %}

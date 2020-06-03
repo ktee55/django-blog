@@ -2,6 +2,8 @@
 from django.contrib.auth.views import SuccessURLAllowedHostsMixin
 from django.utils.http import is_safe_url
 
+# Loginページ以外でもリンクURLにnextを付けて前のページに戻れるようにする。
+# リンク無しに直接アクセスした際、ポスト投稿後にエラー（!!改善点!!）
 class DynamicRedirectMixin(SuccessURLAllowedHostsMixin):
 
     redirect_field_name = 'next'

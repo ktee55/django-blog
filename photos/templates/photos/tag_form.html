@@ -10,4 +10,11 @@
         <button class="btn btn-outline-info" type="submit">タグを追加</button>
       </fieldset>
     </form>
+
+    <small>List</small>
+    <ul class="list-disc">
+      {% for tag in photo_tags%}
+      <li>{{ tag.name }}</li>
+      {% endfor %}
+    </ul>
 {% endblock %}

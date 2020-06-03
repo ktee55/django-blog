@@ -109,7 +109,7 @@
                 <li class="list-group-item list-group-item-light">
                   Categories
                   <ul>
-                    {% for category in categories %}
+                    {% for category in post_categories %}
                       {% if category.published_posts.count %}
                         <li><a href="{% url 'blog-category' category.name %}">{{ category }} ({{category.published_posts.count }})</a></li>
                       {% endif %}
@@ -119,7 +119,7 @@
                 <li class="list-group-item list-group-item-light">
                   Tags
                   <ul>
-                    {% for tag in tags %}
+                    {% for tag in post_tags %}
                       {% if tag.published_posts.count %}
                         <li><a href="{% url 'blog-tag' tag.name %}">{{ tag }} ({{ tag.published_posts.count }})</a></li>
                       {% endif %}

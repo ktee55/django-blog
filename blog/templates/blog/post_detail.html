@@ -34,7 +34,9 @@
               </a>
               {% endif %}
 
-              <div class="article-content">{{ post.content | safe | linebreaks }}</div>
+              <div class="article-content">
+                {{ post.content | safe | linebreaks }}
+              </div>
 
               {% if post.links.count %}
               <div class="links">

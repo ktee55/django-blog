@@ -45,9 +45,9 @@ class PostDetailView(UserPassesTestMixin, DetailView):  # -> post_detail.html
     # context_object_name = 'post'
 
   def get_context_data(self, **kwargs):
-    post = self.get_object()
     context = super().get_context_data(**kwargs) 
     context["comment_form"] = CommentForm()
+    post = self.get_object()
 
     try:
       context["next"] = post.get_next_by_date_posted(draft=False)
@@ -231,6 +231,11 @@ class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirec
   fields = ['name']
   success_url = reverse_lazy('category-create')
 
+  # def get_context_data(self, **kwargs):
+  #   context = super().get_context_data(**kwargs) 
+  #   context["post_categories"] = Category.objects.all() ==> context_processors.pyで既に渡されてる
+  #   return context
+
   #ユーザーがスタッフの時にのみ許可
   def test_func(self):
     if self.request.user.is_staff:
@@ -242,6 +247,11 @@ class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixi
   model=Tag
   fields = ['name']
   success_url = reverse_lazy('tag-create')
+
+  # def get_context_data(self, **kwargs):
+  #   context = super().get_context_data(**kwargs) 
+  #   context["post_tags"] = Tag.objects.all() ==> context_processors.pyで既に渡されてる
+  #   return context
 
   #ユーザーがスタッフの時にのみ許可
   def test_func(self):

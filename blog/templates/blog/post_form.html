@@ -27,7 +27,12 @@
             <!-- <input type="text" name="title" maxlength="100" class="textinput textInput form-control" required="" id="id_title">  -->
         </div> <!-- div_id_title -->
 
+        <!-- 既に画像が入ってる時はスタイルを調整する。 -->
+        {% if post.featured_image %}
+        <div id="div_id_featured_image" class="form-group filled-field"> 
+        {% else %}
         <div id="div_id_featured_image" class="form-group"> 
+        {% endif %}
           <label for="id_featured_image" class="">メイン画像(option)</label> 
           <div class="custom-file "> 
             {{ form.featured_image }}
@@ -67,15 +72,20 @@
           </div> 
         </div>
 
-        <section class="link-formset">
+        {% if not post.links.count %}
+          <section class="link-formset no-urls">
+        {% else %}
+          <section class="link-formset">
+        {% endif %}
           <h4 class="mb-4">参照URL<small> ※最大10個まで登録可能です。</small></h4>
           {{ formset.management_form }}
           {% for url_form in formset %}
-            {% if edit %}
+            <!-- {% if edit %}
               <div class="link-form-edit">
             {% else %}
               <div class="link-form">
-            {% endif %}
+            {% endif %} -->
+              <div class="link-form">
                 {{ url_form|crispy }}
               </div>
           {% endfor %}
@@ -110,13 +120,13 @@
     </form> -->
 
     {% comment %} 
-    <form method="POST" action="" class="post-form">
+    <!-- <form method="POST" action="" class="post-form">
       {% csrf_token %}
       <fieldset class="form-group">
         {{ category_form|crispy }}
         <button class="btn btn-outline-info" type="submit">カテゴリーを追加</button>
       </fieldset>
-    </form> 
+    </form>  -->
     {% endcomment %}
     
     <div class="photo_insert">

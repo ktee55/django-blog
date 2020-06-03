@@ -130,6 +130,11 @@ class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirec
   fields = ['name']
   # success_url = reverse_lazy('category-create')
 
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs) 
+    context["photo_categories"] = Category.objects.all()
+    return context
+
   #ユーザーがスタッフの時にのみ許可
   def test_func(self):
     if self.request.user.is_staff:
@@ -141,6 +146,11 @@ class TagCreateView(LoginRequiredMixin, UserPassesTestMixin, DynamicRedirectMixi
   model=Tag
   fields = ['name']
   # success_url = reverse_lazy('category-create')
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs) 
+    context["photo_tags"] = Tag.objects.all()
+    return context
 
   #ユーザーがスタッフの時にのみ許可
   def test_func(self):

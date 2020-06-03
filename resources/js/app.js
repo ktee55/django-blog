@@ -13,6 +13,7 @@ if (document.querySelector('.photo_insert')) {
     $('#navbarToggle').classList.toggle('collapse');
   })
 
+
   if ($('#id_featured_image')) {
     $('#id_featured_image').on('change', function() {
       let filename = this.value.replace(/^.*[\\\/]/, '')
@@ -20,23 +21,25 @@ if (document.querySelector('.photo_insert')) {
     })
   }
 
-  const multi_form_control = () => {
 
-    // 2番目以降のフォームを隠す（１個だけ表示する）
+  const multiFormControl = () => {
+
+    // 画像アップロードフォームにて、2番目以降のフォームを隠す（１個だけ表示する）
     const hideOthers = (elem) => {
-        let el = document.getElementsByClassName(elem);
+        let el = document.querySelectorAll(elem);
         for (let i = 1; i < el.length; i++) {
           el[i].classList.add('hide');
           el[0].classList.add('mt-0');
         }
     } // hideOthers
 
-    hideOthers('link-form'); //Post新規投稿ページ
-    hideOthers('multiField'); //Photo Upload Page
+    // hideOthers('link-form'); //Post新規投稿ページ =>下記functionに統一=>
+    hideOthers('.photo-form .multiField'); //Photo Upload Page
+
 
     // クリックで１個ずつフォームの表示・非表示
     const toggleForms = (elem) => {
-      let el = document.getElementsByClassName(elem);
+      let el = document.querySelectorAll(elem);
       let i = 1;
       if ($('#add-form')) {
         $('#add-form').on('click', function(e) {
@@ -55,27 +58,38 @@ if (document.querySelector('.photo_insert')) {
       }
     } // toggleForms
 
-    toggleForms('link-form'); //Post新規投稿ページ
-    toggleForms('multiField'); //Photo Upload Page
+    // toggleForms('link-form'); //Post新規投稿ページ =>下記functionに統一=>
+    toggleForms('.photo-form .multiField'); //Photo Upload Page
 
-    // Post更新ページにて既にデータが入ってるフォームのみ表示
-    let linkForms = document.querySelectorAll('.link-form-edit .urlinput');
-    linkForms.forEach(form => {
-      // console.log(form.value);
-      if ( form.value == "" || form.value == null ) {
-        form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable');
+
+    // 既にデータが入ってるフォームのみ表示
+    const hideEmptyForms = (elem) => {
+      let linkForms = document.querySelectorAll(elem);
+      linkForms.forEach(form => {
+        // console.log(form.value);
+        if ( form.value == "" || form.value == null ) {
+          //空のフォームを非表示、表示/非表示をコントロール、"削除する"チェックボックスを非表示にする->SCSS
+          form.parentNode.parentNode.parentNode.classList.add('hide', 'togglable', 'url-empty');
+        }
+      })
+      // PostにURLがひとつもない場合(新規投稿含む)、ひとつだけ空のフォームを表示
+      let el = document.querySelectorAll('.no-urls .togglable')[0]
+      if (el) {
+        el.classList.remove('hide');
       }
-    })
-    // ひとつだけ空のフォームを表示
-    $$('.togglable')[0].classList.remove('hide');
-    // 空のフォームは表示・非表示をコントロールできるように
-    toggleForms('togglable');
+
+      toggleForms('.togglable');
+    }
+
+    hideEmptyForms('.link-form .urlinput');
+
 
   } //multi_form_control
 
-  multi_form_control()
+  multiFormControl()
 
-  const modal_control = () => {
+
+  const modalControl = () => {
     
     let modal = $('.modal');
 
@@ -99,7 +113,7 @@ if (document.querySelector('.photo_insert')) {
   } // modal_control
 
   if($('.modal')) {
-    modal_control();
+    modalControl();
   }
 
 

@@ -1,21 +1,16 @@
 from django import forms
 from .models import Comment, Post, URL,Category, Tag
 from django.forms.models import inlineformset_factory
-from django.forms.widgets import ClearableFileInput
+# from django.forms.widgets import ClearableFileInput
 from os import path
 
-#Fileの現在パスをファイル名だけにする
-#UpdateでOK, Createでエラー
-class CustomClearableFileInput(ClearableFileInput):
-    def get_context(self, name, value, attrs):
-        value.name = path.basename(value.name)
-        context = super().get_context(name, value, attrs)       
-        return context
-
-PAYMENT_CHOICES = (
-    ('A', 'About'),
-    ('D', 'Development')
-)
+# #既に保存してあるFileの現在パスをファイル名だけにする
+# #UpdateでOK, Createでエラー
+# class CustomClearableFileInput(ClearableFileInput):
+#     def get_context(self, name, value, attrs):
+#         value.name = path.basename(value.name)
+#         context = super().get_context(name, value, attrs)       
+#         return context
 
 class PostCreateForm(forms.ModelForm):
     title = forms.CharField(
