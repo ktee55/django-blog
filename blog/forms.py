@@ -18,9 +18,9 @@ class PostCreateForm(forms.ModelForm):
             'class': 'textinput textInput form-control'
         })
     )
-    featured_image = forms.ImageField(
-        # widget=CustomClearableFileInput
-    )
+    # featured_image = forms.ImageField(
+    #     # widget=CustomClearableFileInput
+    # )
     content = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'textarea form-control'

@@ -29,8 +29,12 @@
               </header> <!-- post header -->
 
               {% if post.featured_image %}
-              <a href="{{ post.featured_image.url }}" target="_blank">
-                <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
+                {% if post.featured_image.width > 1280 or post.featured_image.height > 1280 %}
+                  <a href="{{ post.featured_image_large.url }}" target="_blank">
+                {% else %}
+                  <a href="{{ post.featured_image.url }}" target="_blank">
+                {% endif %}
+                <p><img src="{{ post.featured_image_medium.url }}" alt="" class="featured_image"></p>
               </a>
               {% endif %}
 
@@ -47,7 +51,7 @@
                   {% else %}
                     <small>(No Title)</small>
                   {% endif %}
-                  <p class="mb-1"><a class="url" href="{{ url }}" target="_blank">{{ link }}</a></p>
+                  <p class="mb-1"><a class="url" href="{{ link }}" target="_blank">{{ link }}</a></p>
                 {% endfor %}
               </div>
               {% endif %}

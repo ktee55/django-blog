@@ -4,7 +4,11 @@
 <div id="photo-detail">
 
   <div class="content-section">
+    {% if photo.origin.width > 1280 or photo.origin.height > 1280 %}
+    <a href="{{ photo.large.url }}" target="_blank">
+    {% else %}
     <a href="{{ photo.origin.url }}" target="_blank">
+    {% endif %}
       <p><img src="{{ photo.medium.url }}" class="mb-3"></p>
     </a>
     <div class="mb-4">

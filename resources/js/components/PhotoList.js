@@ -9,7 +9,7 @@ const PhotoList = (props) => {
 
   const insertImageFromList = (e) => {
     // console.log(e.target.dataset.medium)
-    let image = `<a href="${e.target.dataset.origin}" target="_blank"><img src="${e.target.dataset.medium}"></a>`;
+    let image = `<a href="${e.target.dataset.link}" target="_blank"><img src="${e.target.dataset.medium}"></a>`;
     document.querySelector('#id_content').value += image;
   }
 
@@ -34,7 +34,7 @@ const PhotoList = (props) => {
     let elements = currentPhotos.map((photo,index) => {
       return (
       <li key={photo.id}>
-        <img className="thumb" onClick={insertImageFromList} src={ photo.thumbnail } data-medium={ photo.medium } data-origin={ photo.origin }/> 
+        <img className="thumb" onClick={insertImageFromList} src={ photo.thumbnail } data-medium={ photo.medium } data-link ={ photo.large }/> 
       </li>
       )
     })

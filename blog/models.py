@@ -2,7 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-from PIL import Image
+
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill, ResizeToFit
 
 class Tag(models.Model):
   name = models.CharField(max_length=100, verbose_name="タグ")
@@ -32,6 +34,29 @@ class Category(models.Model):
 class Post(models.Model):
   title = models.CharField(max_length=100, verbose_name="タイトル")
   featured_image = models.ImageField(blank=True, upload_to='featured_image/%y/%m/', verbose_name="メイン画像(option)")
+  featured_image_large = ImageSpecField(source="featured_image",
+                       processors=[ResizeToFit(1280, 1280)],
+                       format='JPEG'
+                       )
+
+  featured_image_medium = ImageSpecField(source='featured_image',
+                      processors=[ResizeToFit(700, 700)],
+                      format="JPEG",
+                      options={'quality': 80}
+                      )
+
+  featured_image_small = ImageSpecField(source='featured_image',
+                          processors=[ResizeToFill(250,250)],
+                          format="JPEG",
+                          options={'quality': 80}
+                          )
+
+  featured_image_thumbnail= ImageSpecField(source='featured_image',
+                          processors=[ResizeToFill(75,75)],
+                          format="JPEG",
+                          options={'quality': 80}
+                          )
+
   content = models.TextField(verbose_name="内容")
   # date_posted = models.DateTimeField(auto_now=True) #常に日付更新
   # date_posted = models.DateTimeField(auto_now_add=True) #作成時のみ更新。更新時日付更新されない。

@@ -29,10 +29,11 @@ class Photo(models.Model):
 
   origin = models.ImageField(upload_to="photos/%y/%m/", verbose_name="画像")
 
-  # large = ImageSpecField(source="origin",
-  #                      processors=[ResizeToFit(1280, 1280)],
-  #                      format='JPEG'
-  #                      )
+  large = ImageSpecField(source="origin",
+                      processors=[ResizeToFit(1280, 1280)],
+                      format='JPEG',
+                      options={'quality': 80}
+                      )
 
   medium = ImageSpecField(source='origin',
                       processors=[ResizeToFit(700, 700)],

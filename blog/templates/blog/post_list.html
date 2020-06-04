@@ -28,8 +28,12 @@
             {% endif %} -->
             </h2>
             {% if post.featured_image %}
-             <a href="{{ post.featured_image.url }}" target="_blank">
-              <p><img src="{{ post.featured_image.url }}" alt="" class="featured_image"></p>
+              {% if post.featured_image.width > 1280 or post.featured_image.height > 1280 %}
+                <a href="{{ post.featured_image_large.url }}" target="_blank">
+              {% else %}
+                <a href="{{ post.featured_image.url }}" target="_blank">
+              {% endif %}
+              <p><img src="{{ post.featured_image_medium.url }}" alt="" class="featured_image"></p>
              </a>
             {% endif %}
             <p class="article-content"> {{ post.content | safe | slice:":150" }}.....</p>

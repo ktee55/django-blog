@@ -632,7 +632,7 @@ var PhotoList = function PhotoList(props) {
 
   var insertImageFromList = function insertImageFromList(e) {
     // console.log(e.target.dataset.medium)
-    var image = "<a href=\"".concat(e.target.dataset.origin, "\" target=\"_blank\"><img src=\"").concat(e.target.dataset.medium, "\"></a>");
+    var image = "<a href=\"".concat(e.target.dataset.link, "\" target=\"_blank\"><img src=\"").concat(e.target.dataset.medium, "\"></a>");
     document.querySelector('#id_content').value += image;
   };
 
@@ -667,7 +667,7 @@ var PhotoList = function PhotoList(props) {
       onClick: insertImageFromList,
       src: photo.thumbnail,
       "data-medium": photo.medium,
-      "data-origin": photo.origin
+      "data-link": photo.large
     }));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
