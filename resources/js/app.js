@@ -9,9 +9,25 @@ if (document.querySelector('.photo_insert')) {
 
 (function ($, $$) {
 
-  $('.navbar-toggler').on('click', function() {
-    $('#navbarToggle').classList.toggle('collapse');
-  })
+  const navbarCollapseFunction = () => {
+
+    let navbarToggler = $('.navbar-toggler-icon')
+    let navbarCollapse = $('.navbar-collapse')
+
+    navbarToggler.on('click', function() {
+      navbarCollapse.classList.toggle('collapse');
+    })
+
+    document.body.on('click', function(e) {
+      // if(!e.target.classList.contains('navbar-toggler-icon')) {
+      if(e.target !== navbarToggler) {
+        navbarCollapse.classList.add('collapse');
+      }
+    })
+
+  } //navbarCollapseFunction
+
+  navbarCollapseFunction();
 
 
   if ($('#id_featured_image')) {

@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.core.mail import send_mail
 
 from .models import Post, Comment, Category, Tag
 # from photos.models import Photo
@@ -21,7 +22,7 @@ class PostListView(ListView):
   # template_name = 'blog/home.html' #default -> <app>/<model>_<viewtype>.html
   context_object_name = 'posts'
   # ordering = ['-date_posted']
-  paginate_by = 3
+  paginate_by = 5
 
   def get_queryset(self):
       if self.request.user.is_authenticated:
@@ -34,7 +35,7 @@ class UserPostListView(ListView):
   model = Post
   template_name = 'blog/post_list.html' 
   context_object_name = 'posts'
-  paginate_by = 3
+  paginate_by = 5
 
   def get_queryset(self):
     user = get_object_or_404(User, username=self.kwargs.get('username'))
@@ -137,6 +138,13 @@ def add_comment(request, post_id):
             if post.author == request.user:
               comment.approved_comment = True
             comment.save()
+            send_mail(
+              f'{request.user.username} left a comment on {post.title}',
+              f'{comment.comment}',
+              'uncleko496@gmail.com',
+              ['uncleko496@gmail.com', post.author.email],
+              fail_silently=False,
+            ) 
             return redirect('post-detail', pk=post.pk)
     else:
         form = CommentForm()
@@ -197,7 +205,7 @@ class CategoryPostListView(ListView):
   model = Post
   template_name = 'blog/post_list.html' 
   context_object_name = 'posts'
-  paginate_by = 3
+  paginate_by = 5
 
   def get_queryset(self):
     category = get_object_or_404(Category, name=self.kwargs.get('category_name'))
@@ -207,7 +215,7 @@ class TagPostListView(ListView):
   model = Post
   template_name = 'blog/post_list.html' 
   context_object_name = 'posts'
-  paginate_by = 3
+  paginate_by = 5
 
   def get_queryset(self):
     tag = get_object_or_404(Tag, name=self.kwargs.get('tag_name'))

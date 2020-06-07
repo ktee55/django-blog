@@ -6,7 +6,7 @@
       {% csrf_token %}
       <fieldset class="form-group">
         <!-- <legend class="border-bottm mb-4">この投稿を削除</legend> -->
-        <h5>このコメント"{{ comment.comment }}"を削除してもよろしいですか？</h5>
+        <h5>このコメント"{{ comment.comment | linebreaks }}"を削除してもよろしいですか？</h5>
       </fieldset>
       <div class="form-group">
         <button class="btn btn-outline-danger" type="submit">削除する</button>

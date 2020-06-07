@@ -57,10 +57,13 @@ a.article-title:hover {
 
 .article-content img {
   max-width: 100%;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
 }
 
 .featured_image {
   max-width: 100%;
+  margin-bottom: 1rem;
 }
 
 .article-img {
@@ -153,7 +156,8 @@ small {
 }
 
 .prev-next {
-  margin-bottom: 20px;
+  flex: 100%;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
@@ -201,6 +205,10 @@ ul.list-disc li {
 #side-menu ul:first-child #photo-link a {
   color: white;
   text-decoration: underline;
+}
+
+.media {
+  flex-wrap: wrap;
 }
 
 div.content-section {
@@ -366,7 +374,7 @@ ul.image-list li img {
 }
 
 .comment-list {
-  margin: 50px 0 50px 30px;
+  margin: 50px 0 20px 30px;
 }
 
 .comment-list article {

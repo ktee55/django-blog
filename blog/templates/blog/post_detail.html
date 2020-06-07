@@ -78,7 +78,6 @@
               </footer> <!-- post footer -->
             </article> <!-- post -->
 
-            {% if user.is_authenticated %}
             <div class="comment-list">
               {% for comment in post.comments_ordered.all %}
               <article>
@@ -119,7 +118,7 @@
                 </header> <!-- comment header -->
 
                 <main>
-                  <p>{{ comment | safe | linebreaks }}</p>
+                  <p>{{ comment | linebreaks }}</p>
 
                   {% if comment.url %}
                     <small>参照URL: </small>
@@ -137,7 +136,7 @@
               {% endfor %}
             </div> <!-- .comment-list -->
 
-              
+            {% if user.is_authenticated %}
             <div> <!-- comment-form -->
               <!-- <a class="btn btn-default" href="{% url 'comment-create' post.id %}">Add comment</a> -->
               <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle comment-img"> {{ user }}
@@ -155,34 +154,34 @@
 
             {% else %}
               <p class="mt-2">
-                <small>コメントを見るにはログインが必要です。</small>
+                <small>コメントするにはログインが必要です。</small>
               </p>
             {% endif %}
 
           </div> <!-- media-body -->
-          
-        </div>
 
-        <div class="prev-next">
-          <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">Back</a>
-          <div>
-            <a class="btn btn-outline-info mr-1" href="
-              {% if previous %}
-                {% url 'post-detail' previous.id %}
-              {% endif %}
-            ">
-              <i class="fas fa-angle-left"></i>
-            </a>
-            <a class="btn btn-outline-info" href="
-              {% if next %}
-                {% url 'post-detail' next.id %}
-              {% endif %}
-            ">
-              <i class="fas fa-angle-right"></i>
-            </a>
-          </div>
-          <a class="btn btn-info" href="{% url 'blog-home' %}">Top</a>
-        </div>
+          <div class="prev-next">
+            <a class="btn btn-info" href="{{request.META.HTTP_REFERER}}">Back</a>
+            <div>
+              <a class="btn btn-outline-info" href="
+                {% if next %}
+                  {% url 'post-detail' next.id %}
+                {% endif %}
+              ">
+                <i class="fas fa-angle-left"></i>
+              </a>
+              <a class="btn btn-outline-info mr-1" href="
+                {% if previous %}
+                  {% url 'post-detail' previous.id %}
+                {% endif %}
+              ">
+                <i class="fas fa-angle-right"></i>
+              </a>
+            </div>
+            <a class="btn btn-info" href="{% url 'blog-home' %}">Top</a>
+          </div> <!-- prev-next -->
+
+        </div> <!-- content-section -->
         
  </div> <!-- post-detail -->
 

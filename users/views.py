@@ -4,9 +4,16 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.mixins import LoginRequiredMixin #, UserPassesTestMixin
 
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 # from django.contrib.auth.forms import UserCreationForm
+
+# デフォルトではログインしなくてもメール送れる->紛らわしい->ログインを強制する(それだけの上書き)
+class PasswordResetAsLoginView(LoginRequiredMixin, PasswordResetView):
+    template_name = 'user/password_reset.html'
 
 
 def register(request):
@@ -24,6 +31,13 @@ def register(request):
                               password=form.cleaned_data['password1'],
                               )
       login(request, new_user)
+      send_mail(
+        'Thank you for registering',
+        f'You were registered as {request.user.username}',
+        'uncleko496@gmail.com',
+        [request.user.email, 'uncleko496@gmail.com'],
+        fail_silently=False,
+      ) 
       return redirect('profile') #or blog-home, etc..
   else:
     form = UserRegisterForm()
