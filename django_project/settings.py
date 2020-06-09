@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'photos.apps.PhotosConfig',
     'crispy_forms',
     'imagekit',
-    'storages',
+    # 'storages',
     'rest_framework',
     # 'rest_framework.authtoken',  
     # 'allauth', 
@@ -164,19 +164,19 @@ LOGIN_URL = 'login'
 # CSRF_COOKIE_HTTPONLY = True
 
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-# https を有効にします
-# AWS_S3_SECURE_URLS = True
-# 認証クエリーを無効にします
-AWS_QUERYSTRING_AUTH = False
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+# # https を有効にします
+# # AWS_S3_SECURE_URLS = True
+# # 認証クエリーを無効にします
+# AWS_QUERYSTRING_AUTH = False
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'blog.storages.CustomS3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'blog.storages.CustomS3Boto3Storage'
 
 
 REST_FRAMEWORK = {
@@ -221,7 +221,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 # ACCOUNT_EMAIL_REQUIRED = False
 
 #Image-kit セーブ時にサムネイルを保存
-# IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
-# IMAGEKIT_CACHEFILE_DIR = 'OPTIONS'
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+IMAGEKIT_CACHEFILE_DIR = 'OPTIONS'
 
 django_heroku.settings(locals())
